@@ -1,6 +1,6 @@
 const DB = require("../src/db");
 const firebaseAdmin = require("firebase-admin");
-const Register = require("../models/register");
+// const Register = require("../models/register");
 
 const firestore = DB.firestore();
 
@@ -25,7 +25,7 @@ const registerUser = async (req, res, next) => {
         firestore
           .collection("admin/todos/users")
           .doc(global.userUID)
-          .set({ NewUser: true });
+          .set({ isNewUser: true });
         userUID = UserRecord.uid;
         res.send({ isAuth: true, userUID: userUID });
       });

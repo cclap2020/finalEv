@@ -1,9 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import withTodos from "./HOC/withTodos";
+import withTodoHOC from "./HOC/withTodoHOC";
 import Register from "./Register/Register";
 import SignIn from "./SignIn/SignIn";
+
+const EnchancedRegister = withTodoHOC(Register);
 
 export default class Index extends React.Component {
   render() {
@@ -22,7 +24,7 @@ export default class Index extends React.Component {
 
         <Switch>
           <Route path="/register">
-            <Register />
+            <EnchancedRegister />
           </Route>
           <Route path="/signin">
             <SignIn />

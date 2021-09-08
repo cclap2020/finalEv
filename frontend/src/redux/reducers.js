@@ -2,10 +2,8 @@ import { combineReducers } from "redux";
 import { ISAUTH, REGISTER, SIGNIN, USERUID } from "./types";
 
 const initState = {
-  registerEmail: "",
-  registerPassword: "",
-  signInEmail: "",
-  signInPassword: "",
+  emailValue: "",
+  passowrdValue: "",
   isAuth: false,
   userUID: "",
 };
@@ -15,8 +13,8 @@ const registerReducer = (state = initState, action) => {
     case REGISTER:
       return {
         ...state,
-        registerEmail: action.email,
-        registerPassword: action.password,
+        emailValue: action.email,
+        passowrdValue: action.password,
       };
     default:
       return state;
@@ -28,8 +26,8 @@ const signInReducer = (state = initState, action) => {
     case SIGNIN:
       return {
         ...state,
-        signInEmail: action.email,
-        signInPassword: action.password,
+        emailValue: action.email,
+        passowrdValue: action.password,
       };
     default:
       return state;

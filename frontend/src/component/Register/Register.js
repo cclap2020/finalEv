@@ -1,52 +1,17 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-export default function Register() {
-  const [emailValue, setEmailValue] = useState("");
-  const [passwordValue, setPasswordValue] = useState("");
-  const [payload, setPayload] = useState({});
+import React from "react";
 
-  const dispatch = useDispatch();
-  const userUID = useSelector((state) => state.userUID.userUID);
+export default function Register(props) {
+  const {
+    handleEmailChange,
+    handlePasswordChange,
+    handleSubmit,
+    checkdata,
+    emailValue,
+    passwordValue,
+    decideType,
+  } = props;
 
-  const handleEmailChange = (e) => {
-    console.log(e.target.value);
-    setEmailValue(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    console.log(e.target.value);
-    setPasswordValue(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    return setPayload({
-      email: emailValue,
-      password: passwordValue,
-    });
-  };
-
-  const checkdata = () => {
-    console.log(userUID);
-  };
-
-  useEffect(() => {
-    console.log("updated", payload);
-    const headers = { "Content-type": "application/json" };
-
-    return axios
-      .post("http://localhost:3001/api/register", payload, { headers })
-      .then((res) => {
-        dispatch({ type: "ISAUTH", isAuth: res.data.isAuth });
-        dispatch({ type: "USERUID", userUID: res.data.userUID });
-        setPasswordValue("");
-        setEmailValue("");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [payload, dispatch]);
+  decideType("register");
 
   return (
     <div>
@@ -62,7 +27,7 @@ export default function Register() {
           onChange={handlePasswordChange}
           value={passwordValue}
         />
-        <button onClick={(e) => handleSubmit(e)}>Submit</button>
+        <button onClick={handleSubmit}>Submit</button>
       </form>
 
       <button onClick={checkdata}>Check-data</button>
