@@ -6,8 +6,8 @@ export default function Register(props) {
     handlePasswordChange,
     handleSubmit,
     checkdata,
-    emailValue,
-    passwordValue,
+    emailInput,
+    passwordInput,
     decideType,
   } = props;
 
@@ -20,12 +20,12 @@ export default function Register(props) {
           type="email"
           placeholder="Email"
           onChange={handleEmailChange}
-          value={emailValue}
+          value={emailInput}
         />
         <input
           placeholder="Password"
           onChange={handlePasswordChange}
-          value={passwordValue}
+          value={passwordInput}
         />
         <button onClick={handleSubmit}>Submit</button>
       </form>

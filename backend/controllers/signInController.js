@@ -3,6 +3,17 @@ const firebaseAdmin = require("firebase-admin");
 
 const firestore = DB.firestore();
 
+// firebaseAdmin
+//   .auth()
+//   .verifyIdToken(idToken)
+//   .then((decodedToken) => {
+//     const uid = decodedToken.uid;
+//     console.log(uid);
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
+
 const signInController = (req, res) => {
   try {
     console.log(req.body);

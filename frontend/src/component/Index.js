@@ -6,6 +6,7 @@ import Register from "./Register/Register";
 import SignIn from "./SignIn/SignIn";
 
 const EnchancedRegister = withTodoHOC(Register);
+const EnchancedSignIn = withTodoHOC(SignIn);
 
 export default class Index extends React.Component {
   render() {
@@ -27,7 +28,7 @@ export default class Index extends React.Component {
             <EnchancedRegister />
           </Route>
           <Route path="/signin">
-            <SignIn />
+            <EnchancedSignIn />
           </Route>
         </Switch>
       </Router>

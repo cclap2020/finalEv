@@ -1,24 +1,17 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
 
-export default function SignIn() {
-  const [emailInput, setEmailInput] = useState("");
-  const [passwordInput, setPasswordInput] = useState("");
+export default function SignIn(props) {
+  const {
+    handleEmailChange,
+    handlePasswordChange,
+    handleSubmit,
+    checkdata,
+    emailInput,
+    passwordInput,
+    decideType,
+  } = props;
 
-  const signInEmail = useSelector((state) => state.signin.signInEmail);
-  const signInPassword = useSelector((state) => state.signin.signInPassword);
-
-  const handleEmailChange = (e) => {
-    setEmailInput(e.targer.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPasswordInput(e.targer.value);
-  };
-
-  const handleSignInSubmit = (e) => {};
-
-  console.log(signInEmail);
+  decideType("signin");
 
   return (
     <div>
@@ -34,8 +27,9 @@ export default function SignIn() {
           value={passwordInput}
           onChange={handlePasswordChange}
         />
-        <button onClick={handleSignInSubmit}>Submit</button>
+        <button onClick={handleSubmit}>Submit</button>
       </form>
+      <button onClick={checkdata}>check-userUID</button>
     </div>
   );
 }

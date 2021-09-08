@@ -25,7 +25,7 @@ const registerUser = async (req, res, next) => {
         firestore
           .collection("admin/todos/users")
           .doc(global.userUID)
-          .set({ isNewUser: true });
+          .set({ userID: UserRecord.uid, isNewUser: true, email: email });
         userUID = UserRecord.uid;
         res.send({ isAuth: true, userUID: userUID });
       });
