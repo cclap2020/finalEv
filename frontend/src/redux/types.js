@@ -1,0 +1,6 @@
+const REGISTER = "REGISTER";
+const SIGNIN = "SIGNIN";
+const ISAUTH = "ISAUTH";
+const USERUID = "USERUID";
+
+export { REGISTER, SIGNIN, ISAUTH, USERUID };
