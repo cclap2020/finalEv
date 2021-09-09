@@ -1,23 +1,38 @@
-const DB = require("../src/db");
-const firebaseAdmin = require("firebase-admin");
+const db = require("../src/db");
+const admin = require("firebase-admin");
+const config = require("../src/config");
 
-const firestore = DB.firestore();
+const findUser = (email) => {
+  return db.firestore().collection("admin").doc("users").collection(email).id;
+};
 
-// firebaseAdmin
-//   .auth()
-//   .verifyIdToken(idToken)
-//   .then((decodedToken) => {
-//     const uid = decodedToken.uid;
-//     console.log(uid);
-//   })
-//   .catch((err) => {
-//     console.log(err);
+// const docRef = db
+//   .firestore()
+//   .collection("admin")
+//   .doc("users")
+//   .get()
+//   .then((sub) => sub.data());
+
+//I could try to filter out with this
+// const docRef = db
+//   .firestore()
+//   .collection("admin")
+//   .doc("users")
+//   .listCollections()
+//   .then((subCollections) => {
+//     subCollections.forEach((subCollections) => {
+//       subCollections.get().then((Array) => {
+//         Array.docs.forEach((doc) => {
+//           console.log(doc.data());
+//         });
+//       });
+//     });
 //   });
+
+console.log("collection id", docRef);
 
 const signInController = (req, res) => {
   try {
-    console.log(req.body);
-    //req should gives email and password
   } catch (err) {
     res.status(400).send(err.message);
   }

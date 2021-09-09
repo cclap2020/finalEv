@@ -16,6 +16,10 @@ app.use("/api", todoRoutes.routes);
 app.use("/", registerRoutes.routes);
 app.use("/", signInRoutes.routes);
 
+app.post("/sessionLogin", (req, res) => {
+  const idToken = req.body.idToken.toString();
+});
+
 app.listen(config.port, () => {
   console.log(`Listening on Port: ${config.port}`);
 });
