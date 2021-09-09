@@ -8,7 +8,7 @@ const withTodoHOC = (WrappedComponent) => {
   let actionType = "register";
 
   const EnchancedComponent = (props) => {
-    const url = "https://jsonplaceholder.typicode.com/users";
+    const baseUrl = "http://localhost:3001";
 
     const dispatch = useDispatch();
 
@@ -68,8 +68,9 @@ const withTodoHOC = (WrappedComponent) => {
           });
       } else if (payload !== undefined && actionType === "signin") {
         console.log("useEffect signin updated: ", payload);
+
         const headers = { "Content-type": "application/json" };
-        return axios
+        axios
           .post(`http://localhost:3001/${actionType}`, payload, headers)
           .then((res) => {
             console.log("signing res received: ", res.data);
@@ -81,18 +82,22 @@ const withTodoHOC = (WrappedComponent) => {
           .catch((err) => {
             console.log(err);
           });
+        //make a get request
+        axios.get();
       } else {
         return null;
       }
     }, [payload, dispatch]);
 
-    //fetch should return
-    const { data, isLoading, error } = useAxiosFetch(url);
+    //fetch isAuth and userUid
+    const { data, isLoading, error } = useAxiosFetch();
+    const getAuth = useAxiosFetch(baseUrl, "api/auth");
     return (
       <WrappedComponent
         data={data}
         isLoading={isLoading}
         error={error}
+        getAuth={getAuth}
         handleEmailChange={handleEmailChange}
         handlePasswordChange={handlePasswordChange}
         handleSubmit={handleSubmit}

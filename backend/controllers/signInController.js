@@ -1,6 +1,11 @@
 const db = require("../src/db");
-const admin = require("firebase-admin");
-const config = require("../src/config");
+
+const {
+  setIsAuth,
+  setUserUid,
+  getIsAuth,
+  getUserUid,
+} = require("../src/globalVariable");
 
 //this will determine if the sigin user is in the data base or not
 const findUser = async (email, res) => {
@@ -41,7 +46,7 @@ const comparePassword = async (inputEmail, inputPassword) => {
   }
 };
 
-const getUserUid = async (email) => {
+const getUserUidFromDataBase = async (email) => {
   const userUid = await db
     .firestore()
     .collection("admin")
@@ -81,16 +86,24 @@ const getUserUid = async (email) => {
 
 const signInController = async (req, res) => {
   const { email, password } = req.body;
+
   //result should store true or false based on if the collection exist or not.
   let result = await findUser(email);
+
   if (result === false) {
     return res.send("No Such User");
   } else {
+    //compareResult
     let compareResult = await comparePassword(email, password);
+
     if (compareResult) {
-      const userUid = await getUserUid(email);
-      res.send(userUid);
-      console.log(userUid);
+      const userUid = await getUserUidFromDataBase(email);
+      setIsAuth(true);
+      setUserUid(userUid);
+      //console.log("sigin isAuth: ", getIsAuth());
+      // console.log("sigin userUid: ", getUserUid());
+      //console.log(userUid);
+      return res.send({ isAuth: "test", userUid: "test" });
     } else {
       res.send("Wrong password");
       console.log("Wrong password");

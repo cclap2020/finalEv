@@ -9,9 +9,14 @@ export default function SignIn(props) {
     emailInput,
     passwordInput,
     decideType,
+    getAuth,
   } = props;
 
   decideType("signin");
+
+  const checkConsole = () => {
+    console.log(getAuth);
+  };
 
   return (
     <div>
@@ -29,7 +34,7 @@ export default function SignIn(props) {
         />
         <button onClick={handleSubmit}>Submit</button>
       </form>
-      <button onClick={checkdata}>check-userUID</button>
+      <button onClick={checkConsole}>check-userUID</button>
     </div>
   );
 }

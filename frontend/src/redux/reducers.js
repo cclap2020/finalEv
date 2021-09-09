@@ -1,5 +1,12 @@
 import { combineReducers } from "redux";
-import { CUSTOMTOKEN, ISAUTH, REGISTER, SIGNIN, USERUID } from "./types";
+import {
+  CUSTOMTOKEN,
+  GETTODO,
+  ISAUTH,
+  REGISTER,
+  SIGNIN,
+  USERUID,
+} from "./types";
 
 const initState = {
   emailValue: "",
@@ -7,6 +14,7 @@ const initState = {
   isAuth: false,
   userUID: "",
   customToken: "",
+  todoList: [],
 };
 
 const registerReducer = (state = initState, action) => {
@@ -74,12 +82,26 @@ const customTokenReducer = (state = initState, action) => {
   }
 };
 
+const todoListReducer = (state = initState, action) => {
+  switch (action.type) {
+    case GETTODO:
+      console.log("todoListReducer is called");
+      return {
+        ...state,
+        todoList: action.todoList,
+      };
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
   register: registerReducer,
   signin: signInReducer,
   isAuth: isAuthReducer,
   userUID: userUIDReducer,
   customToken: customTokenReducer,
+  todoList: todoListReducer,
 });
 
 export default rootReducer;

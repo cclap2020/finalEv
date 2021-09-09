@@ -1,32 +1,46 @@
-import { REGISTER, SIGNIN, ISAUTH, USERUID, CUSTOMTOKEN } from "./types";
+import {
+  REGISTER,
+  SIGNIN,
+  ISAUTH,
+  USERUID,
+  CUSTOMTOKEN,
+  GETTODO,
+} from "./types";
 
-function register() {
+const register = () => {
   return {
     type: REGISTER,
   };
-}
+};
 
-function sigin() {
+const sigin = () => {
   return {
     type: SIGNIN,
   };
-}
+};
 
-function isAuth() {
+const isAuth = () => {
   return {
     type: ISAUTH,
   };
-}
+};
 
-function userUID() {
+const userUID = () => {
   return {
     type: USERUID,
   };
-}
+};
 
-function customToken() {
+const customToken = () => {
   return {
     type: CUSTOMTOKEN,
   };
-}
-export { register, sigin, isAuth, userUID, customToken };
+};
+
+const getTodo = () => {
+  return {
+    type: GETTODO,
+  };
+};
+
+export { register, sigin, isAuth, userUID, customToken, getTodo };
