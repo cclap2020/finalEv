@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import withTodoHOC from "./HOC/withTodoHOC";
 import Register from "./Register/Register";
 import SignIn from "./SignIn/SignIn";
-import SessionLogin from "../firebase";
 
 const EnchancedRegister = withTodoHOC(Register);
 const EnchancedSignIn = withTodoHOC(SignIn);

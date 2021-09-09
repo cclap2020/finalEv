@@ -1,11 +1,12 @@
 import { combineReducers } from "redux";
-import { ISAUTH, REGISTER, SIGNIN, USERUID } from "./types";
+import { CUSTOMTOKEN, ISAUTH, REGISTER, SIGNIN, USERUID } from "./types";
 
 const initState = {
   emailValue: "",
   passowrdValue: "",
   isAuth: false,
   userUID: "",
+  customToken: "",
 };
 
 const registerReducer = (state = initState, action) => {
@@ -59,11 +60,26 @@ const userUIDReducer = (state = initState, action) => {
   }
 };
 
+const customTokenReducer = (state = initState, action) => {
+  switch (action.type) {
+    case CUSTOMTOKEN:
+      console.log("toke reducer updated: ", action.customToken);
+      return {
+        ...state,
+        customToken: action.customToken,
+      };
+
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
   register: registerReducer,
   signin: signInReducer,
   isAuth: isAuthReducer,
   userUID: userUIDReducer,
+  customToken: customTokenReducer,
 });
 
 export default rootReducer;

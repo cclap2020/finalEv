@@ -3,14 +3,35 @@ const firebaseAdmin = require("firebase-admin");
 
 const firestore = DB.firestore();
 
-global.userUID = "";
+let token = "";
 
-const registerUser = async (req, res, next) => {
+const createUser = async (email, password) => {};
+
+const createToken = (id) => {
+  firebaseAdmin
+    .auth()
+    .createCustomToken(id)
+    .then((token) => (global.token = token));
+};
+
+const createCollection = async (email, password, id) => {
+  firestore
+    .collection("admin")
+    .doc("users")
+    .collection(email)
+    .doc("userInfo")
+    .set({
+      userID: id,
+      isNewUser: true,
+      email: email,
+      password: password,
+    });
+};
+
+const registerUser = async (req, res) => {
+  const { email, password } = req.body;
+
   try {
-    const email = req.body.email;
-    const password = req.body.password;
-    console.log(email);
-    console.log(password);
     firebaseAdmin
       .auth()
       .createUser({
@@ -18,36 +39,16 @@ const registerUser = async (req, res, next) => {
         password: password,
       })
       .then((UserRecord) => {
-        // console.log("Signed In");
-        // console.log("userRecord UID: ", UserRecord.uid);
-        // console.log("userRecordl ", UserRecord);
-        global.userUID = UserRecord.uid;
-
-        firestore
-          .collection("admin")
-          .doc("users")
-          .collection(email)
-          .doc("userInfo")
-          .set({
-            userID: UserRecord.uid,
-            isNewUser: true,
-            email: email,
-            password: password,
-          });
-        userUID = UserRecord.uid;
-        res.send({
-          isAuth: true,
-          userUID: userUID,
-        });
+        //console.log(UserRecord);
+        createCollection(email, password, UserRecord.uid);
+        res.send({ isAuth: true, userUID: UserRecord.uid });
+        // createToken(UserRecord.uid);
+        // console.log(UserRecord.uid);
       });
-    // await firestore.collection("admin/users/users").doc().set(data);
-    // res.send("Received data");
-  } catch (err) {
-    res.status(400).send(err.message);
+  } catch {
+    (err) => console.log(err);
   }
 };
-
-console.log("reg controler userUID:  ", userUID);
 
 module.exports = {
   registerUser,

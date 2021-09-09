@@ -1,4 +1,4 @@
-import { REGISTER, SIGNIN, ISAUTH, USERUID } from "./types";
+import { REGISTER, SIGNIN, ISAUTH, USERUID, CUSTOMTOKEN } from "./types";
 
 function register() {
   return {
@@ -24,4 +24,9 @@ function userUID() {
   };
 }
 
-export { register, sigin, isAuth, userUID };
+function customToken() {
+  return {
+    type: CUSTOMTOKEN,
+  };
+}
+export { register, sigin, isAuth, userUID, customToken };

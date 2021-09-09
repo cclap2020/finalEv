@@ -3,7 +3,6 @@ import useAxiosFetch from "../customHook/useAxiosFetch";
 import useAxiosPost from "../customHook/useAxiosPost";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { act } from "react-dom/test-utils";
 
 const withTodoHOC = (WrappedComponent) => {
   let actionType = "register";
@@ -38,7 +37,7 @@ const withTodoHOC = (WrappedComponent) => {
         email: emailInput,
         password: passwordInput,
       });
-      console.log("withHOC payload Line 43: ", payload);
+      //console.log("withHOC payload Line 43: ", payload);
     };
 
     const checkdata = () => {
@@ -47,14 +46,22 @@ const withTodoHOC = (WrappedComponent) => {
 
     useEffect(() => {
       if (payload !== undefined && actionType === "register") {
-        console.log("useEffect updated: ", payload);
-        const headers = { "Content-type": "application/json" };
-        return axios
-          .post(`http://localhost:3001/${actionType}`, payload, { headers })
+        console.log("useEffect register updated: ", payload);
+        // const headers = {
+        //   Accept: "application/json",
+        //   "Content-type": "application/json",
+        // };
+        // return fetch(`http://localhost:3001/${actionType}`)
+        //   .then((data) => data.json())
+        //   .then(res => {console.log(res);});
+
+        axios
+          .post(`http://localhost:3001/${actionType}`, payload)
           .then((res) => {
+            console.log(res);
+            console.log(res.data);
             dispatch({ type: "ISAUTH", isAuth: res.data.isAuth });
             dispatch({ type: "USERUID", userUID: res.data.userUID });
-            console.log("before reset string");
           })
           .catch((err) => {
             console.log(err);
@@ -63,11 +70,13 @@ const withTodoHOC = (WrappedComponent) => {
         console.log("useEffect signin updated: ", payload);
         const headers = { "Content-type": "application/json" };
         return axios
-          .post(`http://localhost:3001/${actionType}`, payload, { headers })
+          .post(`http://localhost:3001/${actionType}`, payload, headers)
           .then((res) => {
+            console.log("signing res received: ", res.data);
             dispatch({ type: "ISAUTH", isAuth: res.data.isAuth });
             dispatch({ type: "USERUID", userUID: res.data.userUID });
-            console.log("before reset string");
+
+            console.log("test");
           })
           .catch((err) => {
             console.log(err);
