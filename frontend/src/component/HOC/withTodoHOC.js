@@ -66,7 +66,7 @@ const withTodoHOC = (WrappedComponent) => {
           .post(`http://localhost:3001/${actionType}`, payload, { headers })
           .then((res) => {
             dispatch({ type: "ISAUTH", isAuth: res.data.isAuth });
-
+            dispatch({ type: "USERUID", userUID: res.data.userUID });
             console.log("before reset string");
           })
           .catch((err) => {
