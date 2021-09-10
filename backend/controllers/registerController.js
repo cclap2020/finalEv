@@ -1,10 +1,13 @@
 const DB = require("../src/db");
 const firebaseAdmin = require("firebase-admin");
-const { setIsAuth, setUserUid } = require("../src/globalVariable");
+const { isAuthObj, userUidObj } = require("../src/globalVariable");
 
 const firestore = DB.firestore();
 
-let token = "";
+//register should receive email and password and create user in database.
+//after the creation, register should send the uid back to frontend.
+
+//let token = "";
 
 // const createToken = (id) => {
 //   firebaseAdmin
@@ -20,10 +23,20 @@ const createCollection = async (email, password, id) => {
     .collection(email)
     .doc("userInfo")
     .set({
-      userID: id,
+      userUid: id,
       isNewUser: true,
       email: email,
       password: password,
+    });
+
+  firestore
+    .collection("admin")
+    .doc("users")
+    .collection(email)
+    .doc("todoList")
+    .set({
+      userUid: id,
+      todos: [],
     });
 };
 
@@ -42,8 +55,8 @@ const registerUser = async (req, res) => {
 
         //this will create collections
         createCollection(email, password, UserRecord.uid);
-        setIsAuth(true);
-        setUserUid(UserRecord.uid);
+        // setIsAuth(true);
+        // setUserUid(UserRecord.uid);
 
         res.send({ isAuth: true, userUID: UserRecord.uid });
         // createToken(UserRecord.uid);

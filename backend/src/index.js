@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 
 const config = require("./config.js");
-const addTodoRoutes = require("../routes/todo-routes");
+const todoRoutes = require("../routes/todo-routes");
 const registerRoutes = require("../routes/register-routes.js");
 const signInRoutes = require("../routes/signIn-routes");
 const getAuth = require("../routes/auth-routes");
@@ -13,7 +13,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.json());
 
-app.use("/api", addTodoRoutes.routes);
+app.use("/api", todoRoutes.addTodoRoute);
+app.use("/api", todoRoutes.getTodoListRoute);
 app.use("/", registerRoutes.routes);
 app.use("/", signInRoutes.routes);
 app.use("/", getAuth.getAuth);

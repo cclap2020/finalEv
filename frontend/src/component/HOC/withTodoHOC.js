@@ -69,35 +69,43 @@ const withTodoHOC = (WrappedComponent) => {
       } else if (payload !== undefined && actionType === "signin") {
         console.log("useEffect signin updated: ", payload);
 
+        //native fetch method
+        // const requestOptions = {
+        //   method: "POST",
+        //   headers: { "Content-Type": "application/json" },
+        //   body: JSON.stringify(payload),
+        // };
+        // fetch(`http://localhost:3001/${actionType}`, requestOptions)
+        //   .then((response) => response.json())
+        //   .then((data) => console.log(data));
+
+        //axios
         const headers = { "Content-type": "application/json" };
         axios
           .post(`http://localhost:3001/${actionType}`, payload, headers)
           .then((res) => {
             console.log("signing res received: ", res.data);
-            dispatch({ type: "ISAUTH", isAuth: res.data.isAuth });
-            dispatch({ type: "USERUID", userUID: res.data.userUID });
-
-            console.log("test");
+            //dispatch({ type: "ISAUTH", isAuth: res.data.isAuth });
+            //dispatch({ type: "USERUID", userUID: res.data.userUID });
           })
           .catch((err) => {
             console.log(err);
           });
         //make a get request
-        axios.get();
       } else {
         return null;
       }
     }, [payload, dispatch]);
 
-    //fetch isAuth and userUid
+    //this one is meaningless for now
     const { data, isLoading, error } = useAxiosFetch();
-    const getAuth = useAxiosFetch(baseUrl, "api/auth");
+    //const getAuth = useAxiosFetch(baseUrl, "api/auth");
     return (
       <WrappedComponent
         data={data}
         isLoading={isLoading}
         error={error}
-        getAuth={getAuth}
+        //getAuth={getAuth}
         handleEmailChange={handleEmailChange}
         handlePasswordChange={handlePasswordChange}
         handleSubmit={handleSubmit}

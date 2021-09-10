@@ -1,14 +1,12 @@
 const db = require("../src/db");
 
-const {
-  setIsAuth,
-  setUserUid,
-  getIsAuth,
-  getUserUid,
-} = require("../src/globalVariable");
+//Sign in will send uid if the user exist and the input password is the same as the
+//password inside the database
+
+//let userUidObj = { userID: "" };
 
 //this will determine if the sigin user is in the data base or not
-const findUser = async (email, res) => {
+const findUser = async (email) => {
   //collection.get will return an array that contains match user.
   //If that user does not exist, array size = 0
   const size = await db
@@ -54,7 +52,7 @@ const getUserUidFromDataBase = async (email) => {
     .collection(email)
     .doc("userInfo")
     .get()
-    .then((data) => data.data().userID);
+    .then((data) => data.data().userUid);
 
   return userUid;
 };
@@ -91,26 +89,38 @@ const signInController = async (req, res) => {
   let result = await findUser(email);
 
   if (result === false) {
+    console.log("SignIn Controller: no such user");
     return res.send("No Such User");
   } else {
     //compareResult
     let compareResult = await comparePassword(email, password);
 
     if (compareResult) {
-      const userUid = await getUserUidFromDataBase(email);
-      setIsAuth(true);
-      setUserUid(userUid);
+      //this userUid is the userID from the data base
+      try {
+        const userUid = await getUserUidFromDataBase(email);
+
+        // userUidObj.userID = userUid;
+
+        //console.log(userUidObj.userID);
+        res.json({ isAuth: true, userUid: userUid });
+      } catch {
+        (err) => {
+          console.log(err);
+        };
+      }
+
       //console.log("sigin isAuth: ", getIsAuth());
       // console.log("sigin userUid: ", getUserUid());
       //console.log(userUid);
-      return res.send({ isAuth: "test", userUid: "test" });
     } else {
-      res.send("Wrong password");
-      console.log("Wrong password");
+      console.log("Signin Controller: Wrong password");
+      res.json("Wrong password");
     }
   }
 };
 
 module.exports = {
   signInController,
+  //userUidObj,
 };

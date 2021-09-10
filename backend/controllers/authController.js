@@ -1,15 +1,9 @@
-const {
-  setIsAuth,
-  setUserUid,
-  getIsAuth,
-  getUserUid,
-} = require("../src/globalVariable");
+const { userUidObj } = require("./signInController");
 
 const getAuth = async (req, res) => {
-  const isAuth = getIsAuth();
-  const userUid = getUserUid();
-  console.log("authController isAuth: ", isAuth);
-  res.send({ isAuth: isAuth, userUid: userUid });
+  console.log("authController userUidObj: ", userUidObj);
+  res.send("test");
+  // res.send({ isAuth: isAuthObj.isAuth, userUid: userUidObj.userUid });
 };
 
 module.exports = {

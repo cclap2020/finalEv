@@ -10,7 +10,7 @@ const EnchancedRegister = withTodoHOC(Register);
 const EnchancedSignIn = withTodoHOC(SignIn);
 const EnchancedTodoList = withTodoHOC(TodoList);
 
-export default class Index extends React.Component {
+class Index extends React.Component {
   render() {
     return (
       <Router>
@@ -32,9 +32,18 @@ export default class Index extends React.Component {
           <Route path="/signin">
             <EnchancedSignIn />
           </Route>
-          {}
+          
         </Switch>
       </Router>
     );
   }
 }
+
+
+const mapStateToProps = (state) => ({
+
+})
+
+
+
+export default Index
