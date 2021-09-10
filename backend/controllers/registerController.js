@@ -16,7 +16,6 @@ const firestore = DB.firestore();
 //     .then((token) => (global.token = token));
 // };
 
-
 const createCollection = async (email, password, id) => {
   firestore
     .collection("admin")
@@ -36,7 +35,6 @@ const createCollection = async (email, password, id) => {
     .collection(email)
     .doc("todoList")
     .set({
-      userUid: id,
       todos: [],
     });
 };

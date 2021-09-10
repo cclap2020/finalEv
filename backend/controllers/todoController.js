@@ -56,7 +56,7 @@ const getTodoList = async (req, res) => {
 
     //check what firebase return could be undefined or null?
     if (!isUserExist) {
-      console.log("todoControllers: no such user");
+      console.log("getTodoControllers: no such user");
       res.send("no such user");
     } else if (uidFromUserInfo === externalUserUid) {
       const fetchResult = await firestore
@@ -69,7 +69,7 @@ const getTodoList = async (req, res) => {
       res.send(fetchResult);
     } else {
       //here means uid in the userInFo does not match the external uid
-      console.log("todo Controller: Not authenticated");
+      console.log("getTodoControllers: Not authenticated");
       console.log(uidFromUserInfo);
       res.send("Not Authenticated");
     }
@@ -102,7 +102,7 @@ const addTodo = async (req, res) => {
       console.log("todoControllers: no such user");
       res.send("no such user");
     } else if (uidFromUserInfo === externalUserUid) {
-      const todoListPath = await firestore
+      await firestore
         .collection("admin")
         .doc("users")
         .collection(email)
@@ -113,7 +113,7 @@ const addTodo = async (req, res) => {
       res.send("works");
     } else {
       //here means uid in the userInFo does not match the external uid
-      console.log("todo Controller: Not authenticated");
+      console.log("todoController, addTodo: Not authenticated");
       console.log(uidFromUserInfo);
       res.send("Not Authenticated");
     }
@@ -122,29 +122,37 @@ const addTodo = async (req, res) => {
   }
 };
 
+//delete should receive both id and data from frontend
 const deleteTodo = async (req, res) => {
-  const { id, email, userUid } = req.body;
+  const { id, email, userUid, data } = req.body;
+
+  const externalUserUid = userUid;
 
   try {
     const uidFromUserInfo = await getUserUidFromUserInfo(email);
     const isUserExist = await findUser(email);
 
     if (!isUserExist) {
-      console.log("todoControllers: no such user");
+      console.log("deletetodo Controller: no such user");
       res.send("no such user");
     } else if (uidFromUserInfo === externalUserUid) {
-      const todoListPath = await firestore
+      const obj = { id: id, data: data };
+      const todoArray = await firestore
         .collection("admin")
         .doc("users")
         .collection(email)
         .doc("todoList")
-        .update({ todos: admin.firestore.FieldValue.arrayUnion(newTodoObj) });
+        .update({
+          todos: admin.firestore.FieldValue.arrayRemove(obj),
+        });
 
+      console.log(typeof todoArray);
       //.console.log(todoListPath);
-      res.send("works");
+
+      console.log("delete todo suss");
     } else {
       //here means uid in the userInFo does not match the external uid
-      console.log("todo Controller: Not authenticated");
+      console.log("deletetodo Controller: Not authenticated");
       console.log(uidFromUserInfo);
       res.send("Not Authenticated");
     }
