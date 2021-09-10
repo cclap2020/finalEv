@@ -1,6 +1,6 @@
 const DB = require("../src/db");
 const firebaseAdmin = require("firebase-admin");
-const { isAuthObj, userUidObj } = require("../src/globalVariable");
+//const { isAuthObj, userUidObj } = require("../src/globalVariable");
 
 const firestore = DB.firestore();
 

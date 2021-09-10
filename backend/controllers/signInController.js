@@ -1,4 +1,4 @@
-const db = require("../src/db");
+const DB = require("../src/db");
 
 //Sign in will send uid if the user exist and the input password is the same as the
 //password inside the database
@@ -9,8 +9,7 @@ const db = require("../src/db");
 const findUser = async (email) => {
   //collection.get will return an array that contains match user.
   //If that user does not exist, array size = 0
-  const size = await db
-    .firestore()
+  const size = await DB.firestore()
     .collection("admin")
     .doc("users")
     .collection(email)
@@ -28,8 +27,7 @@ const findUser = async (email) => {
 
 const comparePassword = async (inputEmail, inputPassword) => {
   //compare data base's user password and the sign in password
-  const userPassword = await db
-    .firestore()
+  const userPassword = await DB.firestore()
     .collection("admin")
     .doc("users")
     .collection(inputEmail)
@@ -45,14 +43,13 @@ const comparePassword = async (inputEmail, inputPassword) => {
 };
 
 const getUserUidFromDataBase = async (email) => {
-  const userUid = await db
-    .firestore()
+  const userUid = await DB.firestore()
     .collection("admin")
     .doc("users")
     .collection(email)
     .doc("userInfo")
     .get()
-    .then((data) => data.data().userUid);
+    .then((field) => field.data().userUid);
 
   return userUid;
 };
@@ -85,12 +82,13 @@ const getUserUidFromDataBase = async (email) => {
 const signInController = async (req, res) => {
   const { email, password } = req.body;
 
+  console.log("test");
   //result should store true or false based on if the collection exist or not.
   let result = await findUser(email);
 
   if (result === false) {
     console.log("SignIn Controller: no such user");
-    return res.send("No Such User");
+    return res.json({ test: "test" });
   } else {
     //compareResult
     let compareResult = await comparePassword(email, password);

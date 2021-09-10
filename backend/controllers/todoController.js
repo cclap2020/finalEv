@@ -1,6 +1,5 @@
-const e = require("express");
-const uuid = require("uuid");
-
+const { v4: uuidv4 } = require("uuid");
+const admin = require("firebase-admin");
 const DB = require("../src/db");
 //const firebaseAdmin = require("firebase-admin");
 //const Todo = require("../models/todo");
@@ -10,6 +9,7 @@ const firestore = DB.firestore();
 //receive uid and email to perform Read Delete and Updata .
 //(uid should only be available if user sign in, frontend receive uid only through sign in post and register post)
 
+//Redundant code
 const findUser = async (email) => {
   //collection.get will return an array that contains match user.
   //If that user does not exist, array size = 0
@@ -28,7 +28,6 @@ const findUser = async (email) => {
     return true;
   }
 };
-
 const getUserUidFromUserInfo = async (email) => {
   const userUid = await DB.firestore()
     .collection("admin")
@@ -40,6 +39,8 @@ const getUserUidFromUserInfo = async (email) => {
 
   return userUid;
 };
+
+//==========================================
 
 const getTodoList = async (req, res) => {
   const { email, userUid } = req.body;
@@ -77,23 +78,46 @@ const getTodoList = async (req, res) => {
   }
 };
 
-const addTodo = async (req, res, next) => {
-  const { userUid, todoDataObj } = req.body;
-
+const addTodo = async (req, res) => {
+  const { userUid, email, todoDataObj } = req.body;
+  const externalUserUid = userUid;
   //later, move it out from this addTodo Func and just call it,
   //or even move it to another fill that contains helper functions for todo
-  const assignUniqueTodoItemId = (todoDataObj) => {
+
+  const id = uuidv4();
+
+  const insertId = (todoDataObj) => {
     return {
-      id: uuid(),
+      id,
       ...todoDataObj,
     };
   };
 
-  const todoObjWithUid = await assignUniqueTodoItemId(todoDataObj);
+  const newTodoObj = insertId(todoDataObj);
 
   try {
-    await firestore.collection("admin/todos/users").doc(userUid).set(todoData);
-    res.send("Record saved successfuly");
+    const uidFromUserInfo = await getUserUidFromUserInfo(email);
+    const isUserExist = await findUser(email);
+
+    if (!isUserExist) {
+      console.log("todoControllers: no such user");
+      res.send("no such user");
+    } else if (uidFromUserInfo === externalUserUid) {
+      const todoListPath = await firestore
+        .collection("admin")
+        .doc("users")
+        .collection(email)
+        .doc("todoList")
+        .update({ todos: admin.firestore.FieldValue.arrayUnion(newTodoObj) });
+
+      //.console.log(todoListPath);
+      res.send("works");
+    } else {
+      //here means uid in the userInFo does not match the external uid
+      console.log("todo Controller: Not authenticated");
+      console.log(uidFromUserInfo);
+      res.send("Not Authenticated");
+    }
   } catch (err) {
     res.status(400).send(err.message);
   }

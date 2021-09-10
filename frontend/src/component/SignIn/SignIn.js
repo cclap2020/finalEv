@@ -9,13 +9,12 @@ export default function SignIn(props) {
     emailInput,
     passwordInput,
     decideType,
-    getAuth,
   } = props;
 
   decideType("signin");
 
   const checkConsole = () => {
-    console.log(getAuth);
+    console.log(checkdata);
   };
 
   return (

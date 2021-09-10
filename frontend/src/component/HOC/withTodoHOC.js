@@ -33,6 +33,7 @@ const withTodoHOC = (WrappedComponent) => {
     };
 
     const handleSubmit = (e) => {
+      e.preventDefault();
       setPayload({
         email: emailInput,
         password: passwordInput,
@@ -78,15 +79,14 @@ const withTodoHOC = (WrappedComponent) => {
         // fetch(`http://localhost:3001/${actionType}`, requestOptions)
         //   .then((response) => response.json())
         //   .then((data) => console.log(data));
-
         //axios
         const headers = { "Content-type": "application/json" };
         axios
           .post(`http://localhost:3001/${actionType}`, payload, headers)
           .then((res) => {
             console.log("signing res received: ", res.data);
-            //dispatch({ type: "ISAUTH", isAuth: res.data.isAuth });
-            //dispatch({ type: "USERUID", userUID: res.data.userUID });
+            dispatch({ type: "ISAUTH", isAuth: res.data.isAuth });
+            dispatch({ type: "USERUID", userUID: res.data.userUID });
           })
           .catch((err) => {
             console.log(err);
