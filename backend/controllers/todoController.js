@@ -84,9 +84,8 @@ const addTodo = async (req, res) => {
   //later, move it out from this addTodo Func and just call it,
   //or even move it to another fill that contains helper functions for todo
 
-  const id = uuidv4();
-
   const insertId = (todoDataObj) => {
+    const id = uuidv4();
     return {
       id,
       ...todoDataObj,
@@ -123,7 +122,41 @@ const addTodo = async (req, res) => {
   }
 };
 
+const deleteTodo = async (req, res) => {
+  const { id, email, userUid } = req.body;
+
+  try {
+    const uidFromUserInfo = await getUserUidFromUserInfo(email);
+    const isUserExist = await findUser(email);
+
+    if (!isUserExist) {
+      console.log("todoControllers: no such user");
+      res.send("no such user");
+    } else if (uidFromUserInfo === externalUserUid) {
+      const todoListPath = await firestore
+        .collection("admin")
+        .doc("users")
+        .collection(email)
+        .doc("todoList")
+        .update({ todos: admin.firestore.FieldValue.arrayUnion(newTodoObj) });
+
+      //.console.log(todoListPath);
+      res.send("works");
+    } else {
+      //here means uid in the userInFo does not match the external uid
+      console.log("todo Controller: Not authenticated");
+      console.log(uidFromUserInfo);
+      res.send("Not Authenticated");
+    }
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+
+  res.send("delete todo");
+};
+
 module.exports = {
   getTodoList,
   addTodo,
+  deleteTodo,
 };

@@ -24,7 +24,6 @@ const findUser = async (email) => {
     return true;
   }
 };
-
 const comparePassword = async (inputEmail, inputPassword) => {
   //compare data base's user password and the sign in password
   const userPassword = await DB.firestore()
@@ -41,7 +40,6 @@ const comparePassword = async (inputEmail, inputPassword) => {
     return false;
   }
 };
-
 const getUserUidFromDataBase = async (email) => {
   const userUid = await DB.firestore()
     .collection("admin")
@@ -53,7 +51,6 @@ const getUserUidFromDataBase = async (email) => {
 
   return userUid;
 };
-
 // const docRef = db
 //   .firestore()
 //   .collection("admin")
@@ -78,11 +75,10 @@ const getUserUidFromDataBase = async (email) => {
 //   });
 
 //console.log("collection id", docRef);
-
 const signInController = async (req, res) => {
   const { email, password } = req.body;
 
-  console.log("test");
+  
   //result should store true or false based on if the collection exist or not.
   let result = await findUser(email);
 
