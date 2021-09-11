@@ -3,18 +3,22 @@ const {
   addTodo,
   getTodoList,
   deleteTodo,
+  updateTodo,
 } = require("../controllers/todoController");
 
 const router = express.Router();
 
-const addTodoRouter = router.post("/addtodos", addTodo);
+const addTodoRouter = router.post("/add-todo", addTodo);
 
 const getTodoListRouter = router.post("/get-todo-list", getTodoList);
 
 const deleteTodoRouter = router.delete("/delete-todo", deleteTodo);
 
+const updateTodoRouter = router.put("/update-todo", updateTodo);
+
 module.exports = {
   addTodoRoute: addTodoRouter,
   getTodoListRoute: getTodoListRouter,
   deleteTodoRoute: deleteTodoRouter,
+  updateTodoRoute: updateTodoRouter,
 };

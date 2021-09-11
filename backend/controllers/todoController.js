@@ -65,7 +65,7 @@ const getTodoList = async (req, res) => {
         .collection(email)
         .doc("todoList")
         .get()
-        .then((data) => data.data().todos);
+        .then((data) => data.data());
       res.send(fetchResult);
     } else {
       //here means uid in the userInFo does not match the external uid
@@ -79,20 +79,17 @@ const getTodoList = async (req, res) => {
 };
 
 const addTodo = async (req, res) => {
-  const { userUid, email, todoDataObj } = req.body;
+  const { userUid, email, data } = req.body;
   const externalUserUid = userUid;
   //later, move it out from this addTodo Func and just call it,
   //or even move it to another fill that contains helper functions for todo
 
-  const insertId = (todoDataObj) => {
-    const id = uuidv4();
-    return {
-      id,
-      ...todoDataObj,
-    };
-  };
+  const itemID = uuidv4();
+  // const getTodoData = (todoDataObj) => {
+  //   return todoDataObj.data;
+  // };
 
-  const newTodoObj = insertId(todoDataObj);
+  // const todoData = getTodoData(todoDataObj);
 
   try {
     const uidFromUserInfo = await getUserUidFromUserInfo(email);
@@ -107,7 +104,12 @@ const addTodo = async (req, res) => {
         .doc("users")
         .collection(email)
         .doc("todoList")
-        .update({ todos: admin.firestore.FieldValue.arrayUnion(newTodoObj) });
+        .update({
+          todos: admin.firestore.FieldValue.arrayUnion({
+            id: itemID,
+            data: data,
+          }),
+        });
 
       //.console.log(todoListPath);
       res.send("works");
@@ -136,20 +138,24 @@ const deleteTodo = async (req, res) => {
       console.log("deletetodo Controller: no such user");
       res.send("no such user");
     } else if (uidFromUserInfo === externalUserUid) {
-      const obj = { id: id, data: data };
-      const todoArray = await firestore
+      const objTobeDelete = { id: id, data: data };
+      const todoListRef = await firestore
         .collection("admin")
         .doc("users")
         .collection(email)
-        .doc("todoList")
-        .update({
-          todos: admin.firestore.FieldValue.arrayRemove(obj),
-        });
+        .doc("todoList");
 
-      console.log(typeof todoArray);
-      //.console.log(todoListPath);
+      // const listdata = await todoListRef.get().then((data) => data.data());
 
-      console.log("delete todo suss");
+      todoListRef.update({
+        todos: admin.firestore.FieldValue.arrayRemove({ id: id, data: data }),
+      });
+
+      // console.log(typeof listdata);
+      // //.console.log(todoListPath);
+
+      console.log("delete suss");
+      res.send("Delete suss");
     } else {
       //here means uid in the userInFo does not match the external uid
       console.log("deletetodo Controller: Not authenticated");
@@ -159,12 +165,62 @@ const deleteTodo = async (req, res) => {
   } catch (err) {
     res.status(400).send(err.message);
   }
+};
 
-  res.send("delete todo");
+//updateTodo is not working
+const updateTodo = async (req, res) => {
+  const { id, email, userUid, data } = req.body;
+
+  const externalUserUid = userUid;
+
+  try {
+    const uidFromUserInfo = await getUserUidFromUserInfo(email);
+    const isUserExist = await findUser(email);
+
+    if (!isUserExist) {
+      console.log("updataTodo Controller: no such user");
+      res.send("no such user");
+    } else if (uidFromUserInfo === externalUserUid) {
+      const obj = { data: data };
+
+      // const getObj = await firestore
+      //   .collection("admin")
+      //   .doc("users")
+      //   .collection(email)
+      //   .doc("todoList")
+      //   .get()
+      //   .then((data) => data.data().todos[1]);
+
+      await firestore
+        .collection("admin")
+        .doc("users")
+        .collection(email)
+        .doc("todoList")
+        .set(
+          {
+            todos: admin.firestore.FieldValue.arrayUnion(obj),
+          },
+          { merge: true }
+        );
+
+      console.log("updated suss");
+      //.console.log(todoListPath);
+      res.send("updated suss");
+      console.log("updateTodo todo suss");
+    } else {
+      //here means uid in the userInFo does not match the external uid
+      console.log("updataTodo Controller: Not authenticated");
+      console.log(uidFromUserInfo);
+      res.send("Not Authenticated");
+    }
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
 };
 
 module.exports = {
   getTodoList,
   addTodo,
   deleteTodo,
+  updateTodo,
 };

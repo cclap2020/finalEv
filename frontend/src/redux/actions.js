@@ -25,7 +25,7 @@ const isAuth = () => {
   };
 };
 
-const userUID = () => {
+const userUid = () => {
   return {
     type: USERUID,
   };
@@ -43,4 +43,4 @@ const getTodo = () => {
   };
 };
 
-export { register, sigin, isAuth, userUID, customToken, getTodo };
+export { register, sigin, isAuth, userUid, customToken, getTodo };

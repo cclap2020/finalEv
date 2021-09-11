@@ -15,6 +15,7 @@ app.use(express.json());
 app.use("/api", todoRoutes.getTodoListRoute);
 app.use("/api", todoRoutes.addTodoRoute);
 app.use("/api", todoRoutes.deleteTodoRoute);
+app.use("/api", todoRoutes.updateTodoRoute);
 app.use("/", registerRoutes.routes);
 app.use("/", signInRoutes.routes);
 

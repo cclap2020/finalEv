@@ -4,11 +4,11 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import withTodoHOC from "./HOC/withTodoHOC";
 import Register from "./Register/Register";
 import SignIn from "./SignIn/SignIn";
-import TodoList from "./TodoList/TodoList";
+//import TodoList from "./TodoList/TodoList";
 
 const EnchancedRegister = withTodoHOC(Register);
 const EnchancedSignIn = withTodoHOC(SignIn);
-const EnchancedTodoList = withTodoHOC(TodoList);
+//const EnchancedTodoList = withTodoHOC(TodoList);
 
 class Index extends React.Component {
   render() {
@@ -32,18 +32,10 @@ class Index extends React.Component {
           <Route path="/signin">
             <EnchancedSignIn />
           </Route>
-          
         </Switch>
       </Router>
     );
   }
 }
 
-
-const mapStateToProps = (state) => ({
-
-})
-
-
-
-export default Index
+export default Index;

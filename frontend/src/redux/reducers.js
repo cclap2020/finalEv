@@ -12,12 +12,13 @@ const initState = {
   emailValue: "",
   passowrdValue: "",
   isAuth: false,
-  userUID: "",
+  userUid: "",
   customToken: "",
   todoList: [],
 };
 
 const registerReducer = (state = initState, action) => {
+  //console.log("register reducer called");
   switch (action.type) {
     case REGISTER:
       return {
@@ -31,6 +32,7 @@ const registerReducer = (state = initState, action) => {
 };
 
 const signInReducer = (state = initState, action) => {
+  // console.log("signIn reducer called");
   switch (action.type) {
     case SIGNIN:
       return {
@@ -44,6 +46,7 @@ const signInReducer = (state = initState, action) => {
 };
 
 const isAuthReducer = (state = initState, action) => {
+  //console.log("isAuth reducer called");
   switch (action.type) {
     case ISAUTH:
       return {
@@ -55,12 +58,13 @@ const isAuthReducer = (state = initState, action) => {
   }
 };
 
-const userUIDReducer = (state = initState, action) => {
+const userUidReducer = (state = initState, action) => {
+  //console.log("userUID reducer called");
   switch (action.type) {
     case USERUID:
       return {
         ...state,
-        userUID: action.userUID,
+        userUid: action.userUid,
       };
 
     default:
@@ -68,21 +72,22 @@ const userUIDReducer = (state = initState, action) => {
   }
 };
 
-const customTokenReducer = (state = initState, action) => {
-  switch (action.type) {
-    case CUSTOMTOKEN:
-      console.log("toke reducer updated: ", action.customToken);
-      return {
-        ...state,
-        customToken: action.customToken,
-      };
+// const customTokenReducer = (state = initState, action) => {
+//   switch (action.type) {
+//     case CUSTOMTOKEN:
+//       console.log("toke reducer updated: ", action.customToken);
+//       return {
+//         ...state,
+//         customToken: action.customToken,
+//       };
 
-    default:
-      return state;
-  }
-};
+//     default:
+//       return state;
+//   }
+// };
 
 const todoListReducer = (state = initState, action) => {
+  //console.log("todoList reducer called");
   switch (action.type) {
     case GETTODO:
       console.log("todoListReducer is called");
@@ -99,8 +104,7 @@ const rootReducer = combineReducers({
   register: registerReducer,
   signin: signInReducer,
   isAuth: isAuthReducer,
-  userUID: userUIDReducer,
-  customToken: customTokenReducer,
+  userUid: userUidReducer,
   todoList: todoListReducer,
 });
 

@@ -10,6 +10,7 @@ const withTodoHOC = (WrappedComponent) => {
   const EnchancedComponent = (props) => {
     const baseUrl = "http://localhost:3001";
 
+    const isAuth = useSelector((state) => state.isAuth.isAuth);
     const dispatch = useDispatch();
 
     const [emailInput, setEmailInput] = useState("");
@@ -48,21 +49,13 @@ const withTodoHOC = (WrappedComponent) => {
     useEffect(() => {
       if (payload !== undefined && actionType === "register") {
         console.log("useEffect register updated: ", payload);
-        // const headers = {
-        //   Accept: "application/json",
-        //   "Content-type": "application/json",
-        // };
-        // return fetch(`http://localhost:3001/${actionType}`)
-        //   .then((data) => data.json())
-        //   .then(res => {console.log(res);});
 
         axios
           .post(`http://localhost:3001/${actionType}`, payload)
           .then((res) => {
-            console.log(res);
-            console.log(res.data);
             dispatch({ type: "ISAUTH", isAuth: res.data.isAuth });
             dispatch({ type: "USERUID", userUID: res.data.userUID });
+            //console.log(isAuth);
           })
           .catch((err) => {
             console.log(err);
@@ -70,15 +63,6 @@ const withTodoHOC = (WrappedComponent) => {
       } else if (payload !== undefined && actionType === "signin") {
         console.log("useEffect signin updated: ", payload);
 
-        //native fetch method
-        // const requestOptions = {
-        //   method: "POST",
-        //   headers: { "Content-Type": "application/json" },
-        //   body: JSON.stringify(payload),
-        // };
-        // fetch(`http://localhost:3001/${actionType}`, requestOptions)
-        //   .then((response) => response.json())
-        //   .then((data) => console.log(data));
         //axios
         const headers = { "Content-type": "application/json" };
         axios
@@ -91,6 +75,17 @@ const withTodoHOC = (WrappedComponent) => {
           .catch((err) => {
             console.log(err);
           });
+
+        //native fetch method
+        // const requestOptions = {
+        //   method: "POST",
+        //   headers: { "Content-Type": "application/json" },
+        //   body: JSON.stringify(payload),
+        // };
+        // fetch(`http://localhost:3001/${actionType}`, requestOptions)
+        //   .then((response) => response.json())
+        //   .then((data) => console.log(data));
+
         //make a get request
       } else {
         return null;

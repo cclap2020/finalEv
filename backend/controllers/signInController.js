@@ -78,7 +78,6 @@ const getUserUidFromDataBase = async (email) => {
 const signInController = async (req, res) => {
   const { email, password } = req.body;
 
-  
   //result should store true or false based on if the collection exist or not.
   let result = await findUser(email);
 
