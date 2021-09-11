@@ -15,7 +15,7 @@ const initState = {
   isAuth: false,
   userUid: "",
   email: "",
-  todoList: null,
+  todoList: [],
 };
 
 const registerReducer = (state = initState, action) => {
@@ -93,6 +93,7 @@ const todoListReducer = (state = initState, action) => {
   switch (action.type) {
     case GETTODO:
       console.log("todoListReducer is called");
+      console.log("todoReduer action: ", action);
       return {
         ...state,
         todoList: action.todoList,
