@@ -44,6 +44,7 @@ const getUserUidFromUserInfo = async (email) => {
 
 const getTodoList = async (req, res) => {
   const { email, userUid } = req.body;
+  console.log("check req body", req.body);
 
   const externalUserUid = userUid;
   //this for test purpose, since I can't send user id to frontend, that means I can't
@@ -70,7 +71,8 @@ const getTodoList = async (req, res) => {
     } else {
       //here means uid in the userInFo does not match the external uid
       console.log("getTodoControllers: Not authenticated");
-      console.log(uidFromUserInfo);
+      console.log("udi from database: ", uidFromUserInfo);
+      console.log("udi from req.body: ", externalUserUid);
       res.send("Not Authenticated");
     }
   } catch {

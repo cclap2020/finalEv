@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 
 export default function SignIn(props) {
   const {
@@ -9,14 +10,13 @@ export default function SignIn(props) {
     emailInput,
     passwordInput,
     decideType,
+    isAuth,
   } = props;
 
   decideType("signin");
-
-  const checkConsole = () => {
-    console.log(checkdata);
-  };
-
+  if (isAuth) {
+    <Redirect to="/private-page" />;
+  }
   return (
     <div>
       <h1>Sign In</h1>
@@ -33,7 +33,7 @@ export default function SignIn(props) {
         />
         <button onClick={handleSubmit}>Submit</button>
       </form>
-      <button onClick={checkConsole}>check-userUID</button>
+      <button onClick={checkdata}>check-userUID</button>
     </div>
   );
 }

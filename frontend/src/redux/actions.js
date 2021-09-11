@@ -5,42 +5,54 @@ import {
   USERUID,
   CUSTOMTOKEN,
   GETTODO,
+  STOREEMAIL,
 } from "./types";
 
-const register = () => {
+const registerAction = () => {
   return {
     type: REGISTER,
   };
 };
 
-const sigin = () => {
+const siginAction = () => {
   return {
     type: SIGNIN,
   };
 };
 
-const isAuth = () => {
+const isAuthAction = (isAuth) => {
   return {
     type: ISAUTH,
+    isAuth: isAuth,
   };
 };
 
-const userUid = () => {
+const userUidAction = (userUid) => {
   return {
     type: USERUID,
+    userUid: userUid,
   };
 };
 
-const customToken = () => {
-  return {
-    type: CUSTOMTOKEN,
-  };
-};
-
-const getTodo = () => {
+const getTodoAction = (todoList) => {
   return {
     type: GETTODO,
+    todoList: todoList,
   };
 };
 
-export { register, sigin, isAuth, userUid, customToken, getTodo };
+const storeEmailAction = (email) => {
+  return {
+    type: STOREEMAIL,
+    email: email,
+  };
+};
+
+export {
+  registerAction,
+  siginAction,
+  isAuthAction,
+  userUidAction,
+  getTodoAction,
+  storeEmailAction,
+};

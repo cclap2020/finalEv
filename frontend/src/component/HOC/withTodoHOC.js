@@ -3,21 +3,24 @@ import useAxiosFetch from "../customHook/useAxiosFetch";
 import useAxiosPost from "../customHook/useAxiosPost";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import {
+  isAuthAction,
+  userUidAction,
+  storeEmailAction,
+} from "../../redux/actions";
 
 const withTodoHOC = (WrappedComponent) => {
   let actionType = "register";
 
   const EnchancedComponent = (props) => {
     const baseUrl = "http://localhost:3001";
-
+    const userUid = useSelector((state) => state.userUid.userUid);
     const isAuth = useSelector((state) => state.isAuth.isAuth);
     const dispatch = useDispatch();
 
     const [emailInput, setEmailInput] = useState("");
     const [passwordInput, setPasswordInput] = useState("");
     const [payload, setPayload] = useState();
-
-    const userUID = useSelector((state) => state.userUID.userUID);
 
     const handleEmailChange = (e) => {
       console.log(e.target.value);
@@ -43,18 +46,18 @@ const withTodoHOC = (WrappedComponent) => {
     };
 
     const checkdata = () => {
-      console.log(userUID);
+      console.log(userUid);
     };
 
     useEffect(() => {
       if (payload !== undefined && actionType === "register") {
         console.log("useEffect register updated: ", payload);
-
+        dispatch(storeEmailAction(payload));
         axios
           .post(`http://localhost:3001/${actionType}`, payload)
           .then((res) => {
-            dispatch({ type: "ISAUTH", isAuth: res.data.isAuth });
-            dispatch({ type: "USERUID", userUID: res.data.userUID });
+            dispatch(isAuthAction(res.data.isAuth));
+            dispatch(userUidAction(res.data.userUid));
             //console.log(isAuth);
           })
           .catch((err) => {
@@ -62,15 +65,16 @@ const withTodoHOC = (WrappedComponent) => {
           });
       } else if (payload !== undefined && actionType === "signin") {
         console.log("useEffect signin updated: ", payload);
-
+        dispatch(storeEmailAction(payload.email));
         //axios
         const headers = { "Content-type": "application/json" };
         axios
           .post(`http://localhost:3001/${actionType}`, payload, headers)
           .then((res) => {
             console.log("signing res received: ", res.data);
-            dispatch({ type: "ISAUTH", isAuth: res.data.isAuth });
-            dispatch({ type: "USERUID", userUID: res.data.userUID });
+
+            dispatch(isAuthAction(res.data.isAuth));
+            dispatch(userUidAction(res.data.userUid));
           })
           .catch((err) => {
             console.log(err);
@@ -100,6 +104,8 @@ const withTodoHOC = (WrappedComponent) => {
         data={data}
         isLoading={isLoading}
         error={error}
+        isAuth={isAuth}
+        userUid={userUid}
         //getAuth={getAuth}
         handleEmailChange={handleEmailChange}
         handlePasswordChange={handlePasswordChange}

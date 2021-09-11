@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router";
 
 export default function Register(props) {
   const {
@@ -9,12 +10,17 @@ export default function Register(props) {
     emailInput,
     passwordInput,
     decideType,
+    isAuth,
   } = props;
 
   decideType("register");
+  if (isAuth) {
+    <Redirect to="/private-page" />;
+  }
 
   return (
     <div>
+      <h1>Register</h1>
       <form>
         <input
           type="email"

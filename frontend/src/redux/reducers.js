@@ -5,16 +5,17 @@ import {
   ISAUTH,
   REGISTER,
   SIGNIN,
+  STOREEMAIL,
   USERUID,
 } from "./types";
 
 const initState = {
-  emailValue: "",
-  passowrdValue: "",
+  // emailValue: "",
+  // passowrdValue: "",
   isAuth: false,
   userUid: "",
-  customToken: "",
-  todoList: [],
+  email: "",
+  todoList: null,
 };
 
 const registerReducer = (state = initState, action) => {
@@ -49,6 +50,7 @@ const isAuthReducer = (state = initState, action) => {
   //console.log("isAuth reducer called");
   switch (action.type) {
     case ISAUTH:
+      console.log(action);
       return {
         ...state,
         isAuth: action.isAuth,
@@ -100,12 +102,25 @@ const todoListReducer = (state = initState, action) => {
   }
 };
 
+const storeEmailReduer = (state = initState, action) => {
+  switch (action.type) {
+    case STOREEMAIL:
+      return {
+        ...state,
+        email: action.email,
+      };
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
   register: registerReducer,
   signin: signInReducer,
   isAuth: isAuthReducer,
   userUid: userUidReducer,
   todoList: todoListReducer,
+  email: storeEmailReduer,
 });
 
 export default rootReducer;
