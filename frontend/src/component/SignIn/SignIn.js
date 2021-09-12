@@ -33,7 +33,6 @@ export default function SignIn(props) {
         />
         <button onClick={handleSubmit}>Submit</button>
       </form>
-      <button onClick={checkdata}>check-userUID</button>
     </div>
   );
 }

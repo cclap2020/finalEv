@@ -3,9 +3,9 @@ import {
   SIGNIN,
   ISAUTH,
   USERUID,
-  CUSTOMTOKEN,
   GETTODO,
   STOREEMAIL,
+  SIGNOUT,
 } from "./types";
 
 const registerAction = () => {
@@ -48,6 +48,16 @@ const storeEmailAction = (email) => {
   };
 };
 
+const signOutAction = (userUid, email, isAuth, todoList) => {
+  return {
+    type: SIGNOUT,
+    email: email,
+    userUid: userUid,
+    isAuth: isAuth,
+    todoList: todoList,
+  };
+};
+
 export {
   registerAction,
   siginAction,
@@ -55,4 +65,5 @@ export {
   userUidAction,
   getTodoAction,
   storeEmailAction,
+  signOutAction,
 };

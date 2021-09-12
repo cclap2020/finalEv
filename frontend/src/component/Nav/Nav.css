@@ -1,0 +1,26 @@
+.nav {
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+  justify-content: left;
+  background-color: #264653;
+}
+
+.nav__li {
+  color: white;
+  list-style: none;
+  padding: 1rem 3rem;
+}
+
+.nav__li:hover {
+  background-color: #2d5b6e;
+}
+
+.nav__li__a:link {
+  color: #e9c46a;
+  text-decoration: none;
+}
+
+.nav__li__a:visited {
+  color: #e9c46a;
+}

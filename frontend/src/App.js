@@ -1,13 +1,13 @@
 import "./App.css";
-import Index from "./component/Index";
+import ComponentIndex from "./component/ComponentIndex";
 import { Provider } from "react-redux";
 import store from "./redux/store";
-import SessionLogin from "./firebase";
+import "./App.css";
 
 function App() {
   return (
     <Provider store={store}>
-      <Index />
+      <ComponentIndex />
     </Provider>
   );
 }

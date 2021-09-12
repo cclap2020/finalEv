@@ -1,21 +1,19 @@
 import { combineReducers } from "redux";
 import {
-  CUSTOMTOKEN,
   GETTODO,
   ISAUTH,
   REGISTER,
   SIGNIN,
+  SIGNOUT,
   STOREEMAIL,
   USERUID,
 } from "./types";
 
 const initState = {
-  // emailValue: "",
-  // passowrdValue: "",
   isAuth: false,
   userUid: "",
   email: "",
-  todoList: [],
+  todoList: null,
 };
 
 const registerReducer = (state = initState, action) => {
@@ -115,6 +113,22 @@ const storeEmailReduer = (state = initState, action) => {
   }
 };
 
+const signOutReducer = (state = initState, action) => {
+  console.log("signout red called", action);
+  switch (action.type) {
+    case SIGNOUT:
+      return {
+        ...state,
+        email: action.email,
+        userUid: action.userUid,
+        isAuth: action.isAuth,
+        todoList: action.todoList,
+      };
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
   register: registerReducer,
   signin: signInReducer,
@@ -122,6 +136,7 @@ const rootReducer = combineReducers({
   userUid: userUidReducer,
   todoList: todoListReducer,
   email: storeEmailReduer,
+  signOut: signOutReducer,
 });
 
 export default rootReducer;

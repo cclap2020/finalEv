@@ -108,6 +108,7 @@ const withTodoHOC = (WrappedComponent) => {
     //const getAuth = useAxiosFetch(baseUrl, "api/auth");
     return (
       <WrappedComponent
+        key={isAuth}
         data={data}
         isLoading={isLoading}
         error={error}

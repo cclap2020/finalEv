@@ -35,8 +35,6 @@ export default function Register(props) {
         />
         <button onClick={handleSubmit}>Submit</button>
       </form>
-
-      <button onClick={checkdata}>Check-data</button>
     </div>
   );
 }
