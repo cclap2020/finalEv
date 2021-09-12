@@ -1,7 +1,12 @@
 import React from "react";
 
 export default function TodoItem(props) {
-  console.log(props.id);
+  const { id, data, todoInput, handleItemInputOnChange } = props;
 
-  return <h1>{props.data}</h1>;
+  return (
+    <div>
+      <h3>{data}</h3>
+      <button>X</button>
+    </div>
+  );
 }

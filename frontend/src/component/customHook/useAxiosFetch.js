@@ -3,7 +3,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 
 const useAxiosFetch = (baseUrl, userUid) => {
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
 
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useAxiosFetch from "../customHook/useAxiosFetch";
-import useAxiosPost from "../customHook/useAxiosPost";
+
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import {
@@ -20,16 +20,22 @@ const withTodoHOC = (WrappedComponent) => {
 
     const [emailInput, setEmailInput] = useState("");
     const [passwordInput, setPasswordInput] = useState("");
+    const [addTodoInput, setAddTodoInput] = useState("");
     const [payload, setPayload] = useState();
 
     const handleEmailChange = (e) => {
-      console.log(e.target.value);
+      //console.log(e.target.value);
       setEmailInput(e.target.value);
     };
 
     const handlePasswordChange = (e) => {
-      console.log(e.target.value);
+      //console.log(e.target.value);
       setPasswordInput(e.target.value);
+    };
+
+    const handleAddToDoInputChange = (e) => {
+      console.log(e.target.value);
+      setAddTodoInput(e.target.value);
     };
 
     const decideType = (type) => {
@@ -41,6 +47,7 @@ const withTodoHOC = (WrappedComponent) => {
       setPayload({
         email: emailInput,
         password: passwordInput,
+        addTDD: addTodoInput,
       });
       //console.log("withHOC payload Line 43: ", payload);
     };
@@ -67,9 +74,9 @@ const withTodoHOC = (WrappedComponent) => {
         console.log("useEffect signin updated: ", payload);
         dispatch(storeEmailAction(payload.email));
         //axios
-        const headers = { "Content-type": "application/json" };
+
         axios
-          .post(`http://localhost:3001/${actionType}`, payload, headers)
+          .post(`http://localhost:3001/${actionType}`, payload)
           .then((res) => {
             console.log("signing res received: ", res.data);
 
@@ -109,6 +116,7 @@ const withTodoHOC = (WrappedComponent) => {
         //getAuth={getAuth}
         handleEmailChange={handleEmailChange}
         handlePasswordChange={handlePasswordChange}
+        handleAddToDoInputChange={handleAddToDoInputChange}
         handleSubmit={handleSubmit}
         checkdata={checkdata}
         emailInput={emailInput}
