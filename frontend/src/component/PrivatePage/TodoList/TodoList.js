@@ -112,19 +112,21 @@ export default function TodoList(props) {
       <header>
         <h3>TodoList</h3>
       </header>
-      <div className="todo-list__form">
-        <form>
+      <div className="todo-list__add-todo">
+        <form className="add-todo__form">
           <input
-            className="todo-list__form__input"
+            className="add-todo__form__input"
             placeholder="New Todo"
             onChange={handleItemInputOnChange}
             value={todoInput}
           ></input>
-          <input
-            className="todo-list__form__submit"
-            type="submit"
-            onClick={(e) => handleItemSubmit(e, null, "ADDTODO")}
-          />
+          <section className="add-todo__form__submit-section">
+            <input
+              className="submit-section__submit"
+              type="submit"
+              onClick={(e) => handleItemSubmit(e, null, "ADDTODO")}
+            />
+          </section>
         </form>
       </div>
 

@@ -1,0 +1,40 @@
+.todo-item {
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
+  padding: 5px;
+  flex-wrap: wrap;
+}
+
+.todo-item__input {
+  width: 40vw;
+  padding: 3px;
+  margin-left: 2rem;
+}
+
+.btns {
+  display: flex;
+  flex-wrap: wrap;
+  padding-right: 5px;
+}
+
+.todo-item__edit {
+  margin-left: 5px;
+  padding: 5px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+}
+
+.todo-item__delete {
+  margin-left: 5px;
+  padding: 5px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+}
+
+.todo-item__save {
+  margin-left: 5px;
+  padding: 5px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+}

@@ -1,5 +1,6 @@
 .todo-list {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   align-items: center;
   margin: auto;
@@ -7,15 +8,31 @@
   width: fit-content;
 }
 
-.todo-list__form__input {
-  width: 25vw;
-  padding: 5px;
-  margin-left: 2vw;
+.todo-list__add-todo {
+  width: fit-content;
 }
 
-.todo-list__form__submit {
+.add-todo__form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-left: 1rem;
+  padding-right: 1.5rem;
+  justify-content: center;
+}
+
+.add-todo__form__input {
+  min-width: 50vw;
+  padding: 5px;
+  margin-left: 2rem;
+}
+
+.submit-section__submit {
   margin-left: 5px;
   padding: 5px;
   border: 1px solid lightgray;
   border-radius: 5px;
+}
+
+@media only screen and (max-width: 312) {
 }
