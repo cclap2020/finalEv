@@ -13,3 +13,17 @@
 
   padding: 1rem;
 }
+
+.register__form__input {
+  padding: 5px;
+}
+
+.register__form__submit {
+  padding: 5px;
+  border: 1px solid #0a9396;
+  border-radius: 5px;
+  background-color: #0a9396;
+  color: black;
+  font-size: 15px;
+  font-weight: 700;
+}

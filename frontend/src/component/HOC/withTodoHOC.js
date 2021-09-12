@@ -18,6 +18,7 @@ const withTodoHOC = (WrappedComponent) => {
     const isAuth = useSelector((state) => state.isAuth.isAuth);
     const dispatch = useDispatch();
 
+    const [isLoading, setIsLoading] = useState(false);
     const [emailInput, setEmailInput] = useState("");
     const [passwordInput, setPasswordInput] = useState("");
     const [addTodoInput, setAddTodoInput] = useState("");
@@ -58,19 +59,22 @@ const withTodoHOC = (WrappedComponent) => {
 
     useEffect(() => {
       if (payload !== undefined && actionType === "register") {
+        setIsLoading(true);
         console.log("useEffect register updated: ", payload);
-        dispatch(storeEmailAction(payload));
+        dispatch(storeEmailAction(payload.email));
         axios
           .post(`http://localhost:3001/${actionType}`, payload)
           .then((res) => {
+            //console.log(res.data);
             dispatch(isAuthAction(res.data.isAuth));
             dispatch(userUidAction(res.data.userUid));
-            //console.log(isAuth);
           })
           .catch((err) => {
             console.log(err);
           });
+        setIsLoading(false);
       } else if (payload !== undefined && actionType === "signin") {
+        setIsLoading(true);
         console.log("useEffect signin updated: ", payload);
         dispatch(storeEmailAction(payload.email));
         //axios
@@ -87,6 +91,7 @@ const withTodoHOC = (WrappedComponent) => {
             console.log(err);
           });
 
+        setIsLoading(false);
         //native fetch method
         // const requestOptions = {
         //   method: "POST",
@@ -104,7 +109,7 @@ const withTodoHOC = (WrappedComponent) => {
     }, [payload, dispatch]);
 
     //this one is meaningless for now
-    const { data, isLoading, error } = useAxiosFetch();
+    const { data, error } = useAxiosFetch();
     //const getAuth = useAxiosFetch(baseUrl, "api/auth");
     return (
       <WrappedComponent

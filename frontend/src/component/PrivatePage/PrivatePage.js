@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import TodoList from "./TodoList/TodoList";
 import { Redirect, useHistory } from "react-router";
@@ -16,22 +16,24 @@ export default function PrivatePage() {
 
   if (!isAuth) {
     history.push("/");
+  } else {
+    // setNewAuth(true);
+    return (
+      <div className="private-page">
+        <SignOut />
+        <header className="private-page__header">
+          <h1>Private Page</h1>
+        </header>
+        <TodoList
+          key={listUpdated}
+          listUpdated={listUpdated}
+          setListUpdated={setListUpdated}
+          isAuth={isAuth}
+          userUid={userUid}
+          todoList={todoList}
+          email={email}
+        />
+      </div>
+    );
   }
-  return (
-    <div className="private-page">
-      <SignOut />
-      <header className="private-page__header">
-        <h1>Private Page</h1>
-      </header>
-      <TodoList
-        key={listUpdated}
-        listUpdated={listUpdated}
-        setListUpdated={setListUpdated}
-        isAuth={isAuth}
-        userUid={userUid}
-        todoList={todoList}
-        email={email}
-      />
-    </div>
-  );
 }

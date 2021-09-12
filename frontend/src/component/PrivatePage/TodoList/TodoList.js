@@ -12,7 +12,8 @@ import "./TodoList.css";
 //create api calls in here
 
 export default function TodoList(props) {
-  const { isAuth, userUid, email, setListUpdated, listUpdated } = props;
+  const userUid = useSelector((state) => state.userUid.userUid);
+  const { isAuth, email, setListUpdated, listUpdated } = props;
   const todoList = useSelector((state) => state.todoList.todoList);
   const [payload, setPayload] = useState(null);
   const [actionType, setActionType] = useState(0);
@@ -34,7 +35,7 @@ export default function TodoList(props) {
   const handleItemSubmit = (e, id, actionType) => {
     e.preventDefault();
 
-    console.log(id, actionType);
+    console.log("add todo uid: ", userUid);
     setActionType(actionType);
     setPayload({
       id: id,

@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect } from "react-router";
+import { useHistory } from "react-router";
 import "./Register.css";
 
 export default function Register(props) {
@@ -7,6 +7,7 @@ export default function Register(props) {
     handleEmailChange,
     handlePasswordChange,
     handleSubmit,
+    isLoading,
     checkdata,
     emailInput,
     passwordInput,
@@ -14,9 +15,11 @@ export default function Register(props) {
     isAuth,
   } = props;
 
+  const history = useHistory();
+
   decideType("register");
   if (isAuth) {
-    <Redirect to="/private-page" />;
+    history.push("/private-page");
   }
 
   return (
@@ -26,17 +29,21 @@ export default function Register(props) {
       </header>
       <form className="register__form">
         <input
+          className="register__form__input"
           type="email"
           placeholder="Email"
           onChange={handleEmailChange}
           value={emailInput}
         />
         <input
+          className="register__form__input"
           placeholder="Password"
           onChange={handlePasswordChange}
           value={passwordInput}
         />
-        <button onClick={handleSubmit}>Submit</button>
+        <button className="register__form__submit" onClick={handleSubmit}>
+          Submit
+        </button>
       </form>
     </div>
   );
