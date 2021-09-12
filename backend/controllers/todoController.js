@@ -114,7 +114,7 @@ const addTodo = async (req, res) => {
         });
 
       //.console.log(todoListPath);
-      res.send("updated success");
+      res.send("add todo success");
     } else {
       //here means uid in the userInFo does not match the external uid
       console.log("todoController, addTodo: Not authenticated");
@@ -173,7 +173,7 @@ const deleteTodo = async (req, res) => {
 
 //updateTodo is not working
 const updateTodo = async (req, res) => {
-  const { id, email, userUid, data } = req.body;
+  const { id, email, userUid, newData, prevData } = req.body;
 
   const externalUserUid = userUid;
 
@@ -185,27 +185,29 @@ const updateTodo = async (req, res) => {
       console.log("updataTodo Controller: no such user");
       res.send("no such user");
     } else if (uidFromUserInfo === externalUserUid) {
-      const obj = { data: data };
-
-      // const getObj = await firestore
-      //   .collection("admin")
-      //   .doc("users")
-      //   .collection(email)
-      //   .doc("todoList")
-      //   .get()
-      //   .then((data) => data.data().todos[1]);
+      await firestore
+        .collection("admin")
+        .doc("users")
+        .collection(email)
+        .doc("todoList")
+        .update({
+          todos: admin.firestore.FieldValue.arrayRemove({
+            id: id,
+            data: prevData,
+          }),
+        });
 
       await firestore
         .collection("admin")
         .doc("users")
         .collection(email)
         .doc("todoList")
-        .set(
-          {
-            todos: admin.firestore.FieldValue.arrayUnion(obj),
-          },
-          { merge: true }
-        );
+        .update({
+          todos: admin.firestore.FieldValue.arrayUnion({
+            id: id,
+            data: newData,
+          }),
+        });
 
       console.log("updated suss");
       //.console.log(todoListPath);

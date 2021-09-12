@@ -18,13 +18,14 @@ export default function TodoList(props) {
   const [todoInput, setTodoInput] = useState("");
 
   const arr = [];
-  const checkdata = (e) => {
-    e.preventDefault();
-    console.log("isAuth: ", isAuth);
-    console.log("userUid: ", userUid);
-    console.log("todoList: ", todoList);
-    console.log("email: ", email);
-  };
+
+  // const checkdata = (e) => {
+  //   e.preventDefault();
+  //   console.log("isAuth: ", isAuth);
+  //   console.log("userUid: ", userUid);
+  //   console.log("todoList: ", todoList);
+  //   console.log("email: ", email);
+  // };
 
   const dispatch = useDispatch();
 
@@ -43,13 +44,24 @@ export default function TodoList(props) {
     setTodoInput("");
   };
 
-  const handleDelete = (id, data, actionType) => {
-    setActionType(actionType);
+  const handleDelete = (id, data) => {
+    setActionType("DELETE");
     setPayload({
       id: id,
       email: email,
       userUid: userUid,
       deleteTodo: data,
+    });
+  };
+
+  const handleSave = (id, prevData, newData) => {
+    setActionType("UPDATE");
+    setPayload({
+      id: id,
+      email: email,
+      userUid: userUid,
+      prevData: prevData,
+      newData: newData,
     });
   };
 
@@ -68,17 +80,21 @@ export default function TodoList(props) {
       });
 
     if (payload !== null && actionType === "ADDTODO") {
-      axios.post("http://localhost:3001/api/add-todo", payload).then((data) => {
-        console.log(data);
+      axios.post("http://localhost:3001/api/add-todo", payload).then((res) => {
+        console.log(res);
         setListUpdated(listUpdated + 1);
       });
     } else if (payload !== null && actionType === "DELETE") {
       axios
         .post("http://localhost:3001/api/delete-todo", payload)
-        .then((data) => {
-          console.log(data);
+        .then((res) => {
+          console.log(res);
           setListUpdated(listUpdated + 1);
         });
+    } else if (payload !== null && actionType === "UPDATE") {
+      axios
+        .put("http://localhost:3001/api/update-todo", payload)
+        .then((res) => console.log(res));
     }
   }, [
     email,
@@ -117,9 +133,9 @@ export default function TodoList(props) {
             id={index.id}
             data={index.data}
             handleDelete={handleDelete}
+            handleSave={handleSave}
           />
         ))}
-      <button onClick={checkdata}>ChekcData</button>
     </div>
   );
 }

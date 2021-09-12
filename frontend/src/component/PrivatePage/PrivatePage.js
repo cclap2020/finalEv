@@ -20,7 +20,6 @@ export default function PrivatePage() {
     <div>
       <SignOut />
       <header>Private Page</header>
-
       <TodoList
         key={listUpdated}
         listUpdated={listUpdated}
