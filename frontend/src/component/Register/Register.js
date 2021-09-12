@@ -1,5 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router";
+import "./Register.css";
 
 export default function Register(props) {
   const {
@@ -19,9 +20,11 @@ export default function Register(props) {
   }
 
   return (
-    <div>
-      <h1>Register</h1>
-      <form>
+    <div className="register">
+      <header>
+        <h1>Register</h1>
+      </header>
+      <form className="register__form">
         <input
           type="email"
           placeholder="Email"

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./TodoItem.css";
 
 export default function TodoItem(props) {
   const { id, data, handleDelete, handleSave } = props;
@@ -26,7 +27,7 @@ export default function TodoItem(props) {
     );
   } else if (isDisable === false) {
     return (
-      <div>
+      <div className="todo-list-item">
         <input value={newData} onChange={handleNewData} disabled={isDisable} />
         <button onClick={handleEdit}>Edit</button>
         <button

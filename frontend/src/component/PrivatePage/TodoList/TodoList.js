@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import TodoItem from "./TodoItem/TodoItem";
 import { getTodoAction } from "../../../redux/actions";
+import "./TodoList.css";
 
 //TodoList should send user email and uid back to server
 
@@ -107,18 +108,20 @@ export default function TodoList(props) {
   ]);
 
   return (
-    <div>
+    <div className="todo-list">
       <header>
-        <h1>TodoList</h1>
+        <h3>TodoList</h3>
       </header>
-      <div>
+      <div className="todo-list__form">
         <form>
           <input
+            className="todo-list__form__input"
             placeholder="New Todo"
             onChange={handleItemInputOnChange}
             value={todoInput}
           ></input>
           <input
+            className="todo-list__form__submit"
             type="submit"
             onClick={(e) => handleItemSubmit(e, null, "ADDTODO")}
           />

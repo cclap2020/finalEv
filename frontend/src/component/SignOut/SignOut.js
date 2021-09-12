@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { signOutAction } from "../../redux/actions";
+import "./SignOut.css";
 //sign out should makea post request to the server to change isAuth to false
 //and chnage userUid to an empty string
 
@@ -15,6 +16,7 @@ class SignOut extends React.Component {
       wipeUserUid: "",
       changeAuth: false,
       wipeTodoList: [],
+      isRedirect: false,
     };
   }
 
@@ -32,13 +34,14 @@ class SignOut extends React.Component {
   };
 
   onSginOutBTN = () => {
-    console.log("clicked");
+    //console.log("signout clicked");
     this.props.signOutAction(
       this.state.wipeUserUid,
       this.state.wipeEmail,
       this.state.changeAuth,
       this.state.wipeTodoList
     );
+
     this.props.history.push("/signin");
   };
 
@@ -50,7 +53,13 @@ class SignOut extends React.Component {
   //       )
 
   render() {
-    return <button onClick={this.onSginOutBTN}>Sign Out</button>;
+    return (
+      <div className="sign-out">
+        <button class="sign-out__btn" onClick={this.onSginOutBTN}>
+          Sign Out
+        </button>
+      </div>
+    );
   }
 }
 

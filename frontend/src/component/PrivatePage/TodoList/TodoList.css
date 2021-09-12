@@ -1,0 +1,21 @@
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  gap: 2vh;
+  width: fit-content;
+}
+
+.todo-list__form__input {
+  width: 25vw;
+  padding: 5px;
+  margin-left: 2vw;
+}
+
+.todo-list__form__submit {
+  margin-left: 5px;
+  padding: 5px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+}

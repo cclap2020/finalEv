@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import TodoList from "./TodoList/TodoList";
 import { Redirect, useHistory } from "react-router";
 import SignOut from "../SignOut/SignOut";
+import "./PrivatePage.css";
 
 export default function PrivatePage() {
   const isAuth = useSelector((state) => state.isAuth.isAuth);
@@ -17,9 +18,11 @@ export default function PrivatePage() {
     history.push("/");
   }
   return (
-    <div>
+    <div className="private-page">
       <SignOut />
-      <header>Private Page</header>
+      <header className="private-page__header">
+        <h1>Private Page</h1>
+      </header>
       <TodoList
         key={listUpdated}
         listUpdated={listUpdated}

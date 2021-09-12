@@ -1,0 +1,12 @@
+.sign-out {
+  padding: 1rem;
+  background-color: #264653;
+}
+
+.sign-out__btn {
+  background-color: #264653;
+  border: 0;
+  color: #e9c46a;
+  list-style: none;
+  padding: 1rem 3rem;
+}

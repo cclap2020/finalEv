@@ -1,0 +1,9 @@
+.private-page {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.private-page__header {
+  text-align: center;
+}

@@ -1,6 +1,7 @@
 .nav {
   display: flex;
   padding: 1rem;
+  width: 100vw;
   align-items: center;
   justify-content: left;
   background-color: #264653;

@@ -1,5 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
+import "./SignIn.css";
 
 export default function SignIn(props) {
   const {
@@ -18,9 +19,11 @@ export default function SignIn(props) {
     <Redirect to="/private-page" />;
   }
   return (
-    <div>
-      <h1>Sign In</h1>
-      <form>
+    <div className="signin">
+      <header>
+        <h1>Sign In</h1>
+      </header>
+      <form className="signin__form">
         <input
           placeholder="Email"
           value={emailInput}
