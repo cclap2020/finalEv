@@ -12,7 +12,7 @@ const addTodoRouter = router.post("/add-todo", addTodo);
 
 const getTodoListRouter = router.post("/get-todo-list", getTodoList);
 
-const deleteTodoRouter = router.delete("/delete-todo", deleteTodo);
+const deleteTodoRouter = router.post("/delete-todo", deleteTodo);
 
 const updateTodoRouter = router.put("/update-todo", updateTodo);
 

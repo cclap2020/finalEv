@@ -6,6 +6,10 @@ import { getTodoAction } from "../../../redux/actions";
 
 //TodoList should send user email and uid back to server
 
+//I tried to use HOC, but it seems to be causing some issue that I
+//can't debug easily, since I don't have enought time, I will just
+//create api calls in here
+
 export default function TodoList(props) {
   const { isAuth, userUid, email, setListUpdated, listUpdated } = props;
   const todoList = useSelector((state) => state.todoList.todoList);
@@ -39,6 +43,16 @@ export default function TodoList(props) {
     setTodoInput("");
   };
 
+  const handleDelete = (id, data, actionType) => {
+    setActionType(actionType);
+    setPayload({
+      id: id,
+      email: email,
+      userUid: userUid,
+      deleteTodo: data,
+    });
+  };
+
   const handleItemInputOnChange = (e) => {
     setTodoInput(e.target.value);
   };
@@ -58,6 +72,13 @@ export default function TodoList(props) {
         console.log(data);
         setListUpdated(listUpdated + 1);
       });
+    } else if (payload !== null && actionType === "DELETE") {
+      axios
+        .post("http://localhost:3001/api/delete-todo", payload)
+        .then((data) => {
+          console.log(data);
+          setListUpdated(listUpdated + 1);
+        });
     }
   }, [
     email,
@@ -95,8 +116,7 @@ export default function TodoList(props) {
           <TodoItem
             id={index.id}
             data={index.data}
-            handleItemSubmit={handleItemSubmit}
-            handleItemInputOnChange={handleItemInputOnChange}
+            handleDelete={handleDelete}
           />
         ))}
       <button onClick={checkdata}>ChekcData</button>

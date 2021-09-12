@@ -128,7 +128,7 @@ const addTodo = async (req, res) => {
 
 //delete should receive both id and data from frontend
 const deleteTodo = async (req, res) => {
-  const { id, email, userUid, data } = req.body;
+  const { id, email, userUid, deleteTodo } = req.body;
 
   const externalUserUid = userUid;
 
@@ -140,7 +140,6 @@ const deleteTodo = async (req, res) => {
       console.log("deletetodo Controller: no such user");
       res.send("no such user");
     } else if (uidFromUserInfo === externalUserUid) {
-      const objTobeDelete = { id: id, data: data };
       const todoListRef = await firestore
         .collection("admin")
         .doc("users")
@@ -150,7 +149,10 @@ const deleteTodo = async (req, res) => {
       // const listdata = await todoListRef.get().then((data) => data.data());
 
       todoListRef.update({
-        todos: admin.firestore.FieldValue.arrayRemove({ id: id, data: data }),
+        todos: admin.firestore.FieldValue.arrayRemove({
+          id: id,
+          data: deleteTodo,
+        }),
       });
 
       // console.log(typeof listdata);
