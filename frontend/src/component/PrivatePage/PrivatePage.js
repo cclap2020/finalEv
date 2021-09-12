@@ -20,6 +20,7 @@ export default function PrivatePage() {
       <header>Private Page</header>
       <TodoList
         key={listUpdated}
+        listUpdated={listUpdated}
         setListUpdated={setListUpdated}
         isAuth={isAuth}
         userUid={userUid}

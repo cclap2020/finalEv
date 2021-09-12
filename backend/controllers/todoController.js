@@ -81,7 +81,7 @@ const getTodoList = async (req, res) => {
 };
 
 const addTodo = async (req, res) => {
-  const { userUid, email, data } = req.body;
+  const { userUid, email, addTodo } = req.body;
   const externalUserUid = userUid;
   //later, move it out from this addTodo Func and just call it,
   //or even move it to another fill that contains helper functions for todo
@@ -109,12 +109,12 @@ const addTodo = async (req, res) => {
         .update({
           todos: admin.firestore.FieldValue.arrayUnion({
             id: itemID,
-            data: data,
+            data: addTodo,
           }),
         });
 
       //.console.log(todoListPath);
-      res.send("works");
+      res.send("updated success");
     } else {
       //here means uid in the userInFo does not match the external uid
       console.log("todoController, addTodo: Not authenticated");

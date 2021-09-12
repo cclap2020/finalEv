@@ -7,7 +7,7 @@ import { getTodoAction } from "../../../redux/actions";
 //TodoList should send user email and uid back to server
 
 export default function TodoList(props) {
-  const { isAuth, userUid, email, listUpdated, setListUpdated } = props;
+  const { isAuth, userUid, email, setListUpdated, listUpdated } = props;
   const todoList = useSelector((state) => state.todoList.todoList);
   const [payload, setPayload] = useState(null);
   const [actionType, setActionType] = useState(0);
@@ -56,9 +56,18 @@ export default function TodoList(props) {
     if (payload !== null && actionType === "ADDTODO") {
       axios.post("http://localhost:3001/api/add-todo", payload).then((data) => {
         console.log(data);
+        setListUpdated(listUpdated + 1);
       });
     }
-  }, [email, userUid, dispatch, payload, actionType, listUpdated]);
+  }, [
+    email,
+    userUid,
+    dispatch,
+    payload,
+    actionType,
+    setListUpdated,
+    listUpdated,
+  ]);
 
   return (
     <div>
