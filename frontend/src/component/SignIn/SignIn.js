@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import "./SignIn.css";
 
 export default function SignIn(props) {
@@ -14,6 +14,7 @@ export default function SignIn(props) {
     isAuth,
   } = props;
 
+  const history = useHistory();
   decideType("signin");
   if (isAuth) {
     <Redirect to="/private-page" />;

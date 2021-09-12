@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import TodoList from "./TodoList/TodoList";
-import { Redirect, useHistory } from "react-router";
+import { useHistory } from "react-router";
 import SignOut from "../SignOut/SignOut";
 import "./PrivatePage.css";
 
@@ -14,10 +14,13 @@ export default function PrivatePage() {
 
   const history = useHistory();
 
+  // useEffect(() => {
+
+  // }, []);
+
   if (!isAuth) {
     history.push("/");
   } else {
-    // setNewAuth(true);
     return (
       <div className="private-page">
         <SignOut />

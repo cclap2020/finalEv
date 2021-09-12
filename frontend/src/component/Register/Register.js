@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router";
+import { Redirect, useHistory } from "react-router";
 import "./Register.css";
 
 export default function Register(props) {
@@ -19,7 +19,7 @@ export default function Register(props) {
 
   decideType("register");
   if (isAuth) {
-    history.push("/private-page");
+    <Redirect to="/private-page" />;
   }
 
   return (

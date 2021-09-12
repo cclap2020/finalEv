@@ -37,6 +37,16 @@ const createCollection = async (email, password, id) => {
     .set({
       todos: [],
     });
+
+  firestore
+    .collection("admin")
+    .doc("admin")
+    .update({
+      users: firebaseAdmin.firestore.FieldValue.arrayUnion({
+        userEmail: email,
+        userUid: id,
+      }),
+    });
 };
 
 const registerUser = async (req, res) => {
