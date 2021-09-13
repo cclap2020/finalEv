@@ -100,11 +100,11 @@ const adminGetUserEmail = async (adminUid) => {
 const adminGetUserData = async (userEmail) => {
   try {
     const fetchResult = [];
-    const resultData = {};
+    // const resultData = {};
     for (let i = 0; i < userEmail.length; i++) {
       //console.log(userEmail[i]);
       //console.log("test");
-      console.log("result data: ", resultData);
+      //console.log("result data: ", resultData);
       await DB.firestore()
         .collection("admin")
         .doc("users")
@@ -114,7 +114,6 @@ const adminGetUserData = async (userEmail) => {
         .then((data) => {
           fetchResult.push(data.data());
         });
-      //return (fetchResult = { ...fetchResult, result });
     }
 
     //console.log(fetchResult);
@@ -139,7 +138,7 @@ const adminSignInController = async (req, res) => {
       if (userEmails !== undefined) {
         // console.log(userEmails);
         const userData = await adminGetUserData(userEmails);
-        res.send(userData);
+        res.json({ isAuth: true, userData: userData });
       }
 
       //console.log("get admin uid suss");

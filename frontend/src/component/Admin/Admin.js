@@ -1,5 +1,8 @@
 import axios from "axios";
 import React from "react";
+import { connect } from "react-redux";
+import { admin_userDataAction } from "../../redux/actions";
+import AdminPage from "./AdminPage";
 
 class Admin extends React.Component {
   constructor(props) {
@@ -8,7 +11,7 @@ class Admin extends React.Component {
       adminEmail: "",
       adminPassword: "",
       payload: null,
-      userData: null,
+      isAuth: false,
     };
   }
   handleOnChange = (e) => {
@@ -38,37 +41,53 @@ class Admin extends React.Component {
       console.log("inside api caall");
       axios
         .post("http://localhost:3001/admin-signin", this.state.payload)
-        .then((data) => {
-          console.log(data);
-          // this.setState({ userData: { data } }
+        .then((res) => {
+          this.props.admin_userDataDispatch(res.data.userData);
+          this.setState({ isAuth: res.data.isAuth });
 
-          return (this.setState = { adminEmail: "", adminPassword: "" });
+          //console.log(this.state.isAuth, this.state.userData);
+          this.setState({ adminEmail: "", adminPassword: "" });
         });
     }
   }
 
   render() {
-    return (
-      <div>
-        <h1>Admin Page</h1>
-        <form>
-          <input
-            id="email"
-            placeholder="Email"
-            value={this.state.adminEmail}
-            onChange={this.handleOnChange}
-          ></input>
-          <input
-            id="password"
-            placeholder="Password"
-            value={this.state.adminPassword}
-            onChange={this.handleOnChange}
-          ></input>
-          <input type="submit" onClick={this.handleSubmit} />
-        </form>
-      </div>
-    );
+    if (this.state.isAuth) {
+      <AdminPage />;
+    } else {
+      return (
+        <div>
+          <h1>Admin Page</h1>
+          <form>
+            <input
+              id="email"
+              placeholder="Email"
+              value={this.state.adminEmail}
+              onChange={this.handleOnChange}
+            ></input>
+            <input
+              id="password"
+              placeholder="Password"
+              value={this.state.adminPassword}
+              onChange={this.handleOnChange}
+            ></input>
+            <input type="submit" onClick={this.handleSubmit} />
+          </form>
+        </div>
+      );
+    }
   }
 }
 
-export default Admin;
+const __ = () => {
+  return null;
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    admin_userDataDispatch: (admin_userData) =>
+      dispatch(admin_userDataAction(admin_userData)),
+  };
+};
+
+export default connect(__, mapDispatchToProps)(Admin);

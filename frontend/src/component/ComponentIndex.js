@@ -10,13 +10,9 @@ import withTodoHOC from "./HOC/withTodoHOC";
 import Register from "./Register/Register";
 import SignIn from "./SignIn/SignIn";
 import PrivatePage from "./PrivatePage/PrivatePage";
-import "./ComponentIndex.css";
-
-// import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import Nav from "./Nav/Nav";
 import Admin from "./Admin/Admin";
-
-//import TodoList from "./TodoList/TodoList";
+import "./ComponentIndex.css";
 
 const EnchancedRegister = withTodoHOC(Register);
 const EnchancedSignIn = withTodoHOC(SignIn);
@@ -32,7 +28,7 @@ function ComponentIndex() {
     <Router>
       {isAuth ? <Redirect to="private-page" /> : <Redirect to="/signin" />}
       {currentURL === "/" && <Redirect to="/signin" />}
-      {currentURL === "/admin-signin" && <Redirect to="/admin-signin" />}
+      {currentURL === "/admin" && <Redirect to="/admin" />}
 
       <Switch>
         <Route exact path="/" />
@@ -47,7 +43,7 @@ function ComponentIndex() {
         <Route exact path="/private-page">
           <PrivatePage />
         </Route>
-        <Route exact path="/admin-signin">
+        <Route exact path="/admin">
           <Admin />
         </Route>
       </Switch>

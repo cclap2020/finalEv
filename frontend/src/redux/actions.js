@@ -6,6 +6,7 @@ import {
   GETTODO,
   STOREEMAIL,
   SIGNOUT,
+  ADMIN_USERDATA,
 } from "./types";
 
 const registerAction = () => {
@@ -58,6 +59,13 @@ const signOutAction = (userUid, email, isAuth, todoList) => {
   };
 };
 
+const admin_userDataAction = (admin_userData) => {
+  return {
+    type: ADMIN_USERDATA,
+    admin_userData: admin_userData,
+  };
+};
+
 export {
   registerAction,
   siginAction,
@@ -66,4 +74,5 @@ export {
   getTodoAction,
   storeEmailAction,
   signOutAction,
+  admin_userDataAction,
 };

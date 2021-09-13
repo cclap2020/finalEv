@@ -1,3 +1,4 @@
+import { act } from "react-dom/test-utils";
 import { combineReducers } from "redux";
 import {
   GETTODO,
@@ -7,6 +8,7 @@ import {
   SIGNOUT,
   STOREEMAIL,
   USERUID,
+  ADMIN_USERDATA,
 } from "./types";
 
 const initState = {
@@ -14,6 +16,7 @@ const initState = {
   userUid: "",
   email: "",
   todoList: null,
+  admin_userData: null,
 };
 
 const registerReducer = (state = initState, action) => {
@@ -129,6 +132,18 @@ const signOutReducer = (state = initState, action) => {
   }
 };
 
+const admin_userDataReducer = (state = initState, action) => {
+  switch (action.type) {
+    case ADMIN_USERDATA:
+      return {
+        ...state,
+        admin_userData: action.admin_userData,
+      };
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
   register: registerReducer,
   signin: signInReducer,
@@ -137,6 +152,7 @@ const rootReducer = combineReducers({
   todoList: todoListReducer,
   email: storeEmailReduer,
   signOut: signOutReducer,
+  admin_userDataReducer,
 });
 
 export default rootReducer;
