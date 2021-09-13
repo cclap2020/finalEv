@@ -114,7 +114,7 @@ const storeEmailReduer = (state = initState, action) => {
 };
 
 const signOutReducer = (state = initState, action) => {
-  console.log("signout red called", action);
+  // console.log("signout red called", action);
   switch (action.type) {
     case SIGNOUT:
       return {

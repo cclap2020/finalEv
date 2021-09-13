@@ -10,12 +10,12 @@ const findAdmin = async (adminEmail) => {
     .get()
     .then((field) => field.data().adminInfo.adminEmail);
 
-  //console.log("findUser size: ",size);
-
-  if (emailFromDataBase !== adminEmail) {
-    return false;
-  } else {
+  // console.log("database email: ", emailFromDataBase);
+  // console.log("input email: ", adminEmail);
+  if (emailFromDataBase === adminEmail) {
     return true;
+  } else {
+    return false;
   }
 };
 
@@ -27,6 +27,9 @@ const comparePassword = async (inputPassword) => {
     .doc("admin")
     .get()
     .then((field) => field.data().adminInfo.adminPassword);
+
+  console.log("database password: ", adminPassword);
+  console.log("input password: ", inputPassword);
 
   if (inputPassword === adminPassword) {
     return true;
@@ -52,8 +55,13 @@ const getAdminUidFromDataBase = async (inputEmail, inputPassword) => {
   //just to double check.
   //findAdmin(inputEmail);
   //comparePassword(inputPassword)
-  if (findAdmin(inputEmail)) {
-    if (comparePassword(inputPassword)) {
+  console.log("inputPassword", inputPassword);
+  const isAdminExist = await findAdmin(inputEmail);
+  const isPassword = await comparePassword(inputPassword);
+
+  if (isAdminExist) {
+    console.log("found admin: ", inputEmail);
+    if (isPassword) {
       //console.log("inside get");
       const adminUid = await DB.firestore()
         .collection("admin")
@@ -63,14 +71,14 @@ const getAdminUidFromDataBase = async (inputEmail, inputPassword) => {
 
       return adminUid;
     } else {
-      return "No Such Admin";
+      return "No Such Admin /Wrong Pasasword";
     }
   } else {
     return "No Such Admin";
   }
 };
 
-const adminGetUserEmailController = async (adminUid) => {
+const adminGetUserEmail = async (adminUid) => {
   //const { adminUid } = req.body;
 
   if (compareAdminUid(adminUid)) {
@@ -89,12 +97,14 @@ const adminGetUserEmailController = async (adminUid) => {
   }
 };
 
-const adminGetUserDataController = async (userEmail) => {
+const adminGetUserData = async (userEmail) => {
   try {
     const fetchResult = [];
+    const resultData = {};
     for (let i = 0; i < userEmail.length; i++) {
       //console.log(userEmail[i]);
       //console.log("test");
+      console.log("result data: ", resultData);
       await DB.firestore()
         .collection("admin")
         .doc("users")
@@ -102,7 +112,7 @@ const adminGetUserDataController = async (userEmail) => {
         .doc("todoList")
         .get()
         .then((data) => {
-          return fetchResult.push(data.data());
+          fetchResult.push(data.data());
         });
       //return (fetchResult = { ...fetchResult, result });
     }
@@ -118,20 +128,21 @@ const adminGetUserDataController = async (userEmail) => {
 
 //console.log("collection id", docRef);
 const adminSignInController = async (req, res) => {
-  const { admineEmail, adminPassword } = req.body;
+  const { adminEmail, adminPassword } = req.body;
   //console.log("admin received: ", req.body);
   try {
-    const adminUid = await getAdminUidFromDataBase(admineEmail, adminPassword);
+    const adminUid = await getAdminUidFromDataBase(adminEmail, adminPassword);
     //console.log("adminController: ", adminUid);
     if (adminUid !== undefined) {
-      const userEmails = await adminGetUserEmailController(adminUid);
+      console.log(adminUid);
+      const userEmails = await adminGetUserEmail(adminUid);
       if (userEmails !== undefined) {
         // console.log(userEmails);
-        const userData = await adminGetUserDataController(userEmails);
+        const userData = await adminGetUserData(userEmails);
         res.send(userData);
       }
 
-      console.log("get admin uid suss");
+      //console.log("get admin uid suss");
       res.send("Error occur while checking userEmails");
     } else {
       res.json("Failed to get admin uid");
