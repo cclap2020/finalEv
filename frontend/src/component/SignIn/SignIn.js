@@ -17,7 +17,7 @@ export default function SignIn(props) {
   const history = useHistory();
   decideType("signin");
   if (isAuth) {
-    <Redirect to="/private-page" />;
+    history.push("/private-page");
   }
 
   return (

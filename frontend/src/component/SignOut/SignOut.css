@@ -10,3 +10,7 @@
   list-style: none;
   padding: 1rem 3rem;
 }
+
+.sign-out__btn:hover {
+  background-color: #3f7388;
+}

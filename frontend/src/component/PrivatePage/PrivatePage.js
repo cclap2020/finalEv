@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import TodoList from "./TodoList/TodoList";
-import { useHistory } from "react-router";
+import { useHistory, Redirect } from "react-router";
 import SignOut from "../SignOut/SignOut";
 import "./PrivatePage.css";
 
@@ -19,7 +19,7 @@ export default function PrivatePage() {
   // }, []);
 
   if (!isAuth) {
-    history.push("/");
+    return <Redirect to="/signin" />;
   } else {
     return (
       <div className="private-page">

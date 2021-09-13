@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect, useHistory } from "react-router";
+import { Redirect, use } from "react-router";
 import "./Register.css";
 
 export default function Register(props) {
@@ -14,8 +14,6 @@ export default function Register(props) {
     decideType,
     isAuth,
   } = props;
-
-  const history = useHistory();
 
   decideType("register");
   if (isAuth) {

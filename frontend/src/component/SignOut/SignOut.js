@@ -43,6 +43,7 @@ class SignOut extends React.Component {
     );
 
     this.props.history.push("/signin");
+    window.location.reload();
   };
 
   // this.props.signOutAction(
