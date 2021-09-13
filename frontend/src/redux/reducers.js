@@ -1,4 +1,3 @@
-import { act } from "react-dom/test-utils";
 import { combineReducers } from "redux";
 import {
   GETTODO,
@@ -51,7 +50,7 @@ const isAuthReducer = (state = initState, action) => {
   //console.log("isAuth reducer called");
   switch (action.type) {
     case ISAUTH:
-      console.log(action);
+      //console.log(action);
       return {
         ...state,
         isAuth: action.isAuth,
@@ -152,7 +151,7 @@ const rootReducer = combineReducers({
   todoList: todoListReducer,
   email: storeEmailReduer,
   signOut: signOutReducer,
-  admin_userDataReducer,
+  admin_userData: admin_userDataReducer,
 });
 
 export default rootReducer;
