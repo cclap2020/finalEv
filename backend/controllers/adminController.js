@@ -107,7 +107,37 @@ const adminGetUserEmailController = async (req, res) => {
   }
 };
 
+const adminGetUserDataController = async (req, res) => {
+  const { adminUid, userEmail } = req.body;
+  try {
+    if (compareAdminUid(adminUid)) {
+      const fetchResult = [];
+      for (let i = 0; i < userEmail.length; i++) {
+        //console.log(userEmail[i]);
+        console.log("test");
+        await DB.firestore()
+          .collection("admin")
+          .doc("users")
+          .collection(userEmail[i])
+          .doc("todoList")
+          .get()
+          .then((data) => {
+            return fetchResult.push(data.data());
+          });
+        console.log("127");
+        //return (fetchResult = { ...fetchResult, result });
+      }
+
+      console.log(fetchResult);
+      res.send(fetchResult);
+    }
+  } catch {
+    (err) => console.log(err.message);
+  }
+};
+
 module.exports = {
   adminSignInController,
   adminGetUserEmailController,
+  adminGetUserDataController,
 };

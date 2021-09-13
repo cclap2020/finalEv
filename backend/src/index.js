@@ -21,6 +21,7 @@ app.use("/", registerRoutes.routes);
 app.use("/", signInRoutes.routes);
 app.use("/", adminRoutes.adminSignIn);
 app.use("/", adminRoutes.adminGetUserEmail);
+app.use("/", adminRoutes.adminGetUserData);
 
 app.listen(config.port, () => {
   console.log(`Listening on Port: ${config.port}`);
