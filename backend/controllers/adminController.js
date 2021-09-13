@@ -60,12 +60,59 @@ const getAdminUidFromDataBase = async (inputEmail, inputPassword) => {
         .doc("admin")
         .get()
         .then((field) => field.data().adminInfo.adminUid);
+
       return adminUid;
     } else {
       return "No Such Admin";
     }
   } else {
     return "No Such Admin";
+  }
+};
+
+const adminGetUserEmailController = async (adminUid) => {
+  //const { adminUid } = req.body;
+
+  if (compareAdminUid(adminUid)) {
+    //this will receive user emails from database and push it to users array
+    const userEmails = await DB.firestore()
+      .collection("admin")
+      .doc("users")
+      .listCollections()
+      .then((data) => data.map((user) => user._queryOptions.collectionId));
+
+    return userEmails;
+    //res.send(userEmail);
+    //console.log(usersWithData);
+  } else {
+    res.send("Not Authenticated");
+  }
+};
+
+const adminGetUserDataController = async (userEmail) => {
+  try {
+    const fetchResult = [];
+    for (let i = 0; i < userEmail.length; i++) {
+      //console.log(userEmail[i]);
+      //console.log("test");
+      await DB.firestore()
+        .collection("admin")
+        .doc("users")
+        .collection(userEmail[i])
+        .doc("todoList")
+        .get()
+        .then((data) => {
+          return fetchResult.push(data.data());
+        });
+      //return (fetchResult = { ...fetchResult, result });
+    }
+
+    //console.log(fetchResult);
+
+    return fetchResult;
+    //res.send(fetchResult);
+  } catch {
+    (err) => console.log(err.message);
   }
 };
 
@@ -77,8 +124,15 @@ const adminSignInController = async (req, res) => {
     const adminUid = await getAdminUidFromDataBase(admineEmail, adminPassword);
     //console.log("adminController: ", adminUid);
     if (adminUid !== undefined) {
+      const userEmails = await adminGetUserEmailController(adminUid);
+      if (userEmails !== undefined) {
+        // console.log(userEmails);
+        const userData = await adminGetUserDataController(userEmails);
+        res.send(userData);
+      }
+
       console.log("get admin uid suss");
-      res.json({ isAuth: true, adminUid: adminUid });
+      res.send("Error occur while checking userEmails");
     } else {
       res.json("Failed to get admin uid");
     }
@@ -89,55 +143,6 @@ const adminSignInController = async (req, res) => {
   }
 };
 
-const adminGetUserEmailController = async (req, res) => {
-  const { adminUid } = req.body;
-
-  if (compareAdminUid(adminUid)) {
-    //this will receive user emails from database and push it to users array
-    const userEmail = await DB.firestore()
-      .collection("admin")
-      .doc("users")
-      .listCollections()
-      .then((data) => data.map((user) => user._queryOptions.collectionId));
-
-    res.send(userEmail);
-    //console.log(usersWithData);
-  } else {
-    res.send("Not Authenticated");
-  }
-};
-
-const adminGetUserDataController = async (req, res) => {
-  const { adminUid, userEmail } = req.body;
-  try {
-    if (compareAdminUid(adminUid)) {
-      const fetchResult = [];
-      for (let i = 0; i < userEmail.length; i++) {
-        //console.log(userEmail[i]);
-        console.log("test");
-        await DB.firestore()
-          .collection("admin")
-          .doc("users")
-          .collection(userEmail[i])
-          .doc("todoList")
-          .get()
-          .then((data) => {
-            return fetchResult.push(data.data());
-          });
-        console.log("127");
-        //return (fetchResult = { ...fetchResult, result });
-      }
-
-      console.log(fetchResult);
-      res.send(fetchResult);
-    }
-  } catch {
-    (err) => console.log(err.message);
-  }
-};
-
 module.exports = {
   adminSignInController,
-  adminGetUserEmailController,
-  adminGetUserDataController,
 };

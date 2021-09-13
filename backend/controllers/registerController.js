@@ -41,6 +41,7 @@ const createCollection = async (email, password, id) => {
   firestore
     .collection("admin")
     .doc("admin")
+    .collection("users")
     .update({
       users: firebaseAdmin.firestore.FieldValue.arrayUnion({
         userEmail: email,
