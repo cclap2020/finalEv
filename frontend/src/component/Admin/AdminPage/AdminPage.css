@@ -1,0 +1,17 @@
+.admin-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-color: #cb997e;
+  height: 100vh;
+  width: 100vw;
+}
+
+.admin-page__header {
+  padding: 2rem;
+}
+
+.admin-page__section {
+  padding: 2rem;
+}

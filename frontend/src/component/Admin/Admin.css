@@ -1,0 +1,34 @@
+.admin-signin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-color: #cb997e;
+  height: 100vh;
+  width: 100vw;
+}
+
+.admin-signin__header {
+  padding: 2rem;
+}
+
+.admin-signin__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.admin-signin__email {
+  padding: 4px;
+}
+
+.admin-signin__password {
+  padding: 4px;
+}
+
+.admin-signin__submit {
+  padding: 1px;
+  background-color: #b7b7a4;
+  border: 1px solid #a5a58d;
+  border-radius: 5px;
+}

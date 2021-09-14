@@ -1,0 +1,57 @@
+.admin-item-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background-color: #ddbea9;
+}
+
+.admin-item__header {
+  padding: 1rem;
+}
+
+.todos__new-todo {
+  padding-bottom: 1rem;
+}
+.new-todo__form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.new-todo__input {
+  padding: 4px;
+}
+
+.new-todo__submit {
+  padding: 2px;
+}
+
+.todo {
+  display: flex;
+  padding: 3px 3px 3px 0;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.todo__input {
+  padding: 4px;
+}
+
+.todo__btns-section {
+  display: flex;
+  gap: 5px;
+}
+
+.todo__btns-section__save {
+  padding: 1px;
+  background-color: #b7b7a4;
+  border: 1px solid #a5a58d;
+  border-radius: 5px;
+}
+.todo__btns-section__delete {
+  padding: 1px;
+  background-color: #b7b7a4;
+  border: 1px solid #a5a58d;
+  border-radius: 5px;
+}

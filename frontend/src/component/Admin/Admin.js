@@ -3,7 +3,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { admin_userDataAction, isAuthAction } from "../../redux/actions";
-import AdminPage from "./AdminPage";
+
+import "./Admin.css";
 
 class Admin extends React.Component {
   constructor(props) {
@@ -58,22 +59,30 @@ class Admin extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>Admin Sign In</h1>
-        <form>
+      <div className="admin-signin">
+        <header className="admin-signin__header">
+          <h1>Admin Sign In</h1>
+        </header>
+        <form className="admin-signin__form">
           <input
+            className="admin-signin__email"
             id="email"
             placeholder="Email"
             value={this.state.adminEmail}
             onChange={this.handleOnChange}
           ></input>
           <input
+            className="admin-signin__password"
             id="password"
             placeholder="Password"
             value={this.state.adminPassword}
             onChange={this.handleOnChange}
           ></input>
-          <input type="submit" onClick={this.handleSubmit} />
+          <input
+            className="admin-signin__submit"
+            type="submit"
+            onClick={this.handleSubmit}
+          />
         </form>
       </div>
     );

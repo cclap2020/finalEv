@@ -1,7 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import AdminItem from "./AdminItem";
+import AdminItem from "./AdminItem/AdminItem";
+import "./AdminPage.css";
 
 export default function AdminPage() {
   const isAuth = useSelector((state) => {
@@ -22,21 +23,23 @@ export default function AdminPage() {
   });
 
   return (
-    <div>
-      <header>
+    <div className="admin-page">
+      <header className="admin-page__header">
         <h1>Admin Page</h1>
       </header>
-      {userEmails.map((userEmail, index) => {
-        //console.log("userData " + userEmail + index + userData);
-        console.log(userData);
-        return (
-          <AdminItem
-            userEmail={userEmail}
-            userData={userData[index]}
-            index={index}
-          />
-        );
-      })}
+      <section className="admin-page__section">
+        {userEmails.map((userEmail, index) => {
+          //console.log("userData " + userEmail + index + userData);
+          console.log(userData);
+          return (
+            <AdminItem
+              userEmail={userEmail}
+              userData={userData[index]}
+              index={index}
+            />
+          );
+        })}
+      </section>
     </div>
   );
 }

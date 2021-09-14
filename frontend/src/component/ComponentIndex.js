@@ -12,7 +12,7 @@ import SignIn from "./SignIn/SignIn";
 import PrivatePage from "./PrivatePage/PrivatePage";
 import Nav from "./Nav/Nav";
 import Admin from "./Admin/Admin";
-import AdminPage from "./Admin/AdminPage";
+import AdminPage from "./Admin/AdminPage/AdminPage";
 import "./ComponentIndex.css";
 
 const EnchancedRegister = withTodoHOC(Register);
