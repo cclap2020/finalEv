@@ -20,6 +20,9 @@ app.use("/api", todoRoutes.updateTodoRoute);
 app.use("/", registerRoutes.routes);
 app.use("/", signInRoutes.routes);
 app.use("/", adminRoutes.adminSignIn);
+app.use("/", adminRoutes.admin_AddTodo);
+app.use("/", adminRoutes.admin_DeleteTodo);
+app.use("/", adminRoutes.admin_UpdateTodo);
 
 app.listen(config.port, () => {
   console.log(`Listening on Port: ${config.port}`);

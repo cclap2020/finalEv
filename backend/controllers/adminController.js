@@ -1,4 +1,8 @@
 const DB = require("../src/db");
+const admin = require("firebase-admin");
+const { v4: uuidv4 } = require("uuid");
+
+const firestore = DB.firestore();
 
 //compare admin email in the database to the input email
 const findAdmin = async (adminEmail) => {
@@ -125,7 +129,6 @@ const adminGetUserData = async (userEmails) => {
   }
 };
 
-//console.log("collection id", docRef);
 const adminSignInController = async (req, res) => {
   const { adminEmail, adminPassword } = req.body;
   //console.log("admin received: ", req.body);
@@ -154,6 +157,99 @@ const adminSignInController = async (req, res) => {
   }
 };
 
+//
+const admin_AddTodoController = async (req, res) => {
+  const { userEmail, addTodo } = req.body;
+
+  let itemID = uuidv4();
+
+  try {
+    await firestore
+      .collection("admin")
+      .doc("users")
+      .collection(userEmail)
+      .doc("todoList")
+      .update({
+        todos: admin.firestore.FieldValue.arrayUnion({
+          id: itemID,
+          data: addTodo,
+        }),
+      });
+    //.console.log(todoListPath);
+    res.send("add todo success");
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+};
+
+//delete should receive both id and data from frontend
+const admin_DeleteTodoController = async (req, res) => {
+  const { id, userEmail, deleteTodo } = req.body;
+  try {
+    const todoListRef = await firestore
+      .collection("admin")
+      .doc("users")
+      .collection(userEmail)
+      .doc("todoList");
+
+    // const listdata = await todoListRef.get().then((data) => data.data());
+
+    todoListRef.update({
+      todos: admin.firestore.FieldValue.arrayRemove({
+        id: id,
+        data: deleteTodo,
+      }),
+    });
+
+    // console.log(typeof listdata);
+    // //.console.log(todoListPath);
+
+    res.send("Delete suss");
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+};
+
+//updateTodo is not working
+const admin_UpdateTodoController = async (req, res) => {
+  const { id, userEmail, newData, prevData } = req.body;
+
+  try {
+    await firestore
+      .collection("admin")
+      .doc("users")
+      .collection(userEmail)
+      .doc("todoList")
+      .update({
+        todos: admin.firestore.FieldValue.arrayRemove({
+          id: id,
+          data: prevData,
+        }),
+      });
+
+    await firestore
+      .collection("admin")
+      .doc("users")
+      .collection(userEmail)
+      .doc("todoList")
+      .update({
+        todos: admin.firestore.FieldValue.arrayUnion({
+          id: id,
+          data: newData,
+        }),
+      });
+
+    console.log("updated suss");
+    //.console.log(todoListPath);
+    res.send("updated suss");
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+};
+
 module.exports = {
   adminSignInController,
+  admin_AddTodoController,
+  admin_DeleteTodoController,
+  admin_UpdateTodoController,
 };

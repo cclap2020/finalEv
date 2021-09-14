@@ -22,7 +22,6 @@ class Admin extends React.Component {
       this.setState({ adminPassword: e.target.value });
     }
   };
-
   handleSubmit = (e) => {
     e.preventDefault();
     this.setState({
@@ -32,7 +31,6 @@ class Admin extends React.Component {
       },
     });
   };
-
   componentDidUpdate(prevState) {
     if (
       this.state.adminEmail !== "" &&
