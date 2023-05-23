@@ -1,6 +1,6 @@
 {
-  "name": "final-ev",
-  "version": "1.0.0",
+  "name": "@cclap2020/final-ev",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
